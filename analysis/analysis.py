@@ -61,30 +61,28 @@ def combine_dicts(dict1: Dict[str, int], dict2: Dict[str, int]) -> Dict[str, Tup
 
 
 def calc_stats(methods_and_predicitions: List[Tuple[MethodVocab, str]]) -> Tuple[List[Tuple[str, Tuple[int, int]]], int, int]:
-    new_correct = 0
-    new_incorrect = 0
     correct_predictions_vocab = Counter()
     incorrect_predictions_vocab = Counter()
     for method, prediction in methods_and_predicitions:
         new_name_subwords = method.get_new_name_subwords()
         if new_name_subwords:
-            if prediction == " ".join(method.method_name_subwords):
-                new_correct += 1
-                correct_predictions_vocab.update(new_name_subwords)
-            else:
-                new_incorrect += 1
-                incorrect_predictions_vocab.update(new_name_subwords)
+            predicted_sub_tokens = prediction.split(' ')
+            non_predicted_words = set(new_name_subwords).difference(predicted_sub_tokens)
+            predicted_words = set(new_name_subwords).intersection(predicted_sub_tokens)
+
+            correct_predictions_vocab.update(predicted_words)
+            incorrect_predictions_vocab.update(non_predicted_words)
 
     combined: Dict[str, Tuple[int, int]] = combine_dicts(correct_predictions_vocab, incorrect_predictions_vocab)
     combined_sorted: List[Tuple[str, Tuple[int, int]]] = sorted(combined.items(), key=lambda x: float(x[1][1]+1) / (x[1][0]+x[1][1]+2))
-    return combined_sorted, new_correct, new_incorrect
+    return combined_sorted
 
 
 if __name__ == '__main__':
     methods_and_predicitions = extract_methods_and_predicitions()
-    combined_sorted, new_correct, new_incorrect = calc_stats(methods_and_predicitions)
-    print(f'Correctly predicted names where at least one word had to be invented: {new_correct}')
-    print(f'INcorrectly predicted names where at least one word had to be invented: {new_incorrect}')
+    combined_sorted = calc_stats(methods_and_predicitions)
+    # print(f'Correctly predicted names where at least one word had to be invented: {new_correct}')
+    # print(f'INcorrectly predicted names where at least one word had to be invented: {new_incorrect}')
     n=300
     pprint(f'{n} most easily invented words: \n')
     pprint(combined_sorted[:n])
