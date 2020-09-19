@@ -53,8 +53,8 @@ def extract_methods_and_predicitions() -> List[Tuple[MethodVocab, str]]:
 
 def classify_methods(methodVocabAndPredList: List[Tuple[MethodVocab, str]]) -> Dict[str, List[Tuple[MethodVocab, str]]]:
     vocab = {
-        'setgetters_one_word': [],
-        'setgetters_two_words': [],
+        'setgetters_2_words': [],
+        'setgetters_3_words': [],
         'setgetters_more_words': [],
         'handlers': [],
         'main': [],
@@ -78,9 +78,9 @@ def classify_methods(methodVocabAndPredList: List[Tuple[MethodVocab, str]]) -> D
         new_name_subwords = methodVocab.get_new_name_subwords()
         is_setter = name_subwords[0] in ['get', 'set', 'is']
         if is_setter and len(name_subwords) == 2:
-            vocab['setgetters_one_word'].append((methodVocab, pred))
+            vocab['setgetters_2_words'].append((methodVocab, pred))
         elif is_setter and len(name_subwords) == 3:
-            vocab['setgetters_two_words'].append((methodVocab, pred))
+            vocab['setgetters_3_words'].append((methodVocab, pred))
         elif is_setter and len(name_subwords) > 3:
             vocab['setgetters_more_words'].append((methodVocab, pred))
         elif name_subwords[0] == 'on':
@@ -252,7 +252,7 @@ if __name__ == '__main__':
         print(f"\n=======   {group}  ========")
         stats, overinvented_copied = calc_stats(methods_and_predicitions)
         print(f'Correctly predicted names: {get_correct_predictions(stats)}')
-        print(f'Predicted permuted name: {get_permuted_predictions(stats)}')
+        print(f'In wrong order or with additional words: {get_permuted_predictions(stats)}')
         print(f'INcorrectly predicted names: {get_not_guessed_predictions(stats)}\n')
 
     stats, overinvented_copied = calc_stats(all_methods_and_predicitions)
