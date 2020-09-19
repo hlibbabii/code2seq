@@ -226,15 +226,17 @@ def get_subword_stats(dct: Dict[Stats, int]) -> Dict[str, InventedCopiedStats]:
 
 
 if __name__ == '__main__':
-    methods_and_predicitions = extract_methods_and_predicitions()
-    method_and_predictions_groups = classify_methods(methods_and_predicitions)
+    all_methods_and_predicitions = extract_methods_and_predicitions()
+    method_and_predictions_groups = classify_methods(all_methods_and_predicitions)
     for group, methods_and_predicitions in method_and_predictions_groups.items():
         print(f"\n=======   {group}  ========")
         stats = calc_stats(methods_and_predicitions)
-        subword_stats = get_subword_stats(stats)
-        subword_stats_sorted = sorted(subword_stats.items(), key=lambda x: x[1].total_occured(), reverse=True)
         print(f'Correctly predicted names: {get_correct_predictions(stats)}')
         print(f'Predicted permuted name: {get_permuted_predictions(stats)}')
         print(f'INcorrectly predicted names: {get_not_guessed_predictions(stats)}\n')
-        print("Per word stats:")
-        pprint(subword_stats_sorted[:40])
+
+    stats = calc_stats(all_methods_and_predicitions)
+    subword_stats = get_subword_stats(stats)
+    subword_stats_sorted = sorted(subword_stats.items(), key=lambda x: x[1].total_occured(), reverse=True)
+    print("Per word stats:")
+    pprint(subword_stats_sorted[:300])
