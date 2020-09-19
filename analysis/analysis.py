@@ -166,15 +166,15 @@ def calc_stats(methods_and_predicitions: List[Tuple[MethodVocab, str]]) -> Dict[
 
 
 def get_correct_predictions(dct: Dict[Stats, int]) -> int:
-    return sum([1 for stats, _ in dct.items() if stats.first_subtoken and stats.full_word_guessed])
+    return sum([count for stats, count in dct.items() if stats.first_subtoken and stats.full_word_guessed])
 
 
 def get_permuted_predictions(dct: Dict[Stats, int]) -> int:
-    return sum([1 for stats, _ in dct.items() if stats.first_subtoken and not stats.full_word_guessed and stats.all_subtokens_mentioned])
+    return sum([count for stats, count in dct.items() if stats.first_subtoken and not stats.full_word_guessed and stats.all_subtokens_mentioned])
 
 
 def get_not_guessed_predictions(dct: Dict[Stats, int]) -> int:
-    return sum([1 for stats, _ in dct.items() if stats.first_subtoken and not stats.all_subtokens_mentioned])
+    return sum([count for stats, count in dct.items() if stats.first_subtoken and not stats.all_subtokens_mentioned])
 
 
 @dataclass
@@ -184,19 +184,19 @@ class InventedCopiedStats:
     _copied: int = 0
     _to_copy_total: int = 0
 
-    def invented(self):
-        self._invented += 1
-        self._to_invent_total += 1
+    def invented(self, count: int):
+        self._invented += count
+        self._to_invent_total += count
 
-    def not_invented(self):
-        self._to_invent_total += 1
+    def not_invented(self, count: int):
+        self._to_invent_total += count
 
-    def copied(self):
-        self._copied += 1
-        self._to_copy_total += 1
+    def copied(self, count: int):
+        self._copied += count
+        self._to_copy_total += count
 
-    def not_copied(self):
-        self._to_copy_total += 1
+    def not_copied(self, count: int):
+        self._to_copy_total += count
 
     def total_occured(self):
         return self._to_copy_total + self._to_invent_total
@@ -207,21 +207,21 @@ class InventedCopiedStats:
 
 def get_subword_stats(dct: Dict[Stats, int]) -> Dict[str, InventedCopiedStats]:
     """
-    >>> get_subword_stats({Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1})
-    {'get': (invented:1/2, copied: 0/0), 'name': (invented:0/0, copied: 2/2), 'invent': (invented:1/1, copied: 0/0)}
+    >>> get_subword_stats({Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 100, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1})
+    {'get': (invented:100/101, copied: 0/0), 'name': (invented:0/0, copied: 3/3), 'invent': (invented:1/1, copied: 0/0)}
     """
     invented_copied_stats = defaultdict(InventedCopiedStats)
     for stats, count in dct.items():
         if stats.invented_subtoken:
             if stats.current_subtoken_mentioned:
-                invented_copied_stats[stats.word].invented()
+                invented_copied_stats[stats.word].invented(count)
             else:
-                invented_copied_stats[stats.word].not_invented()
+                invented_copied_stats[stats.word].not_invented(count)
         else:
             if stats.current_subtoken_mentioned:
-                invented_copied_stats[stats.word].copied()
+                invented_copied_stats[stats.word].copied(count)
             else:
-                invented_copied_stats[stats.word].not_copied()
+                invented_copied_stats[stats.word].not_copied(count)
     return dict(invented_copied_stats)
 
 
