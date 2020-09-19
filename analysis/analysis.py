@@ -1,6 +1,6 @@
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, namedtuple
 from dataclasses import dataclass
-from typing import List, Set, Tuple, Dict
+from typing import List, Set, Tuple, Dict, Iterable
 
 from pathlib import Path
 from pprint import pprint
@@ -17,14 +17,16 @@ class MethodVocab(object):
     method_name_subwords: List[str]
     identifiers_subwords: Set[Tuple[str]]
 
-    def normalize_body_subwords(self):
+    def normalize_body_subwords(self) -> Set[str]:
         return {subword for identifier in self.identifiers_subwords for subword in identifier}
 
-    def get_new_name_subwords(self):
-        normalized_subwords = self.normalize_body_subwords()
-        s = {subword for subword in self.method_name_subwords if subword not in normalized_subwords}
-        return s
+    def get_new_name_subwords(self) -> Set[str]:
+        return self.get_invented_subwords_from_list(self.method_name_subwords)
 
+    def get_invented_subwords_from_list(self, lst: Iterable[str]) -> Set[str]:
+        normalized_subwords = self.normalize_body_subwords()
+        s = {subword for subword in lst if subword not in normalized_subwords}
+        return s
 
 def extract(s: str):
     identifiers_subwords: Set[Tuple[str]] = set()
@@ -144,25 +146,38 @@ class Stats:
         if self.all_subtokens_mentioned:
             assert self.current_subtoken_mentioned
 
+@dataclass
+class OverGuessed:
+    overinvented: int = 0
+    overcopied: int = 0
 
-def calc_stats(methods_and_predicitions: List[Tuple[MethodVocab, str]]) -> Dict[Stats, int]:
+
+def calc_stats(methods_and_predicitions: List[Tuple[MethodVocab, str]]) -> Tuple[Dict[Stats, int], Dict[str, OverGuessed]]:
     """
     >>> calc_stats([\
 (MethodVocab(['get', 'name'], {('name',)}), 'get name'), \
 (MethodVocab(['get', 'name'], {('name',)}), 'return name'), \
 (MethodVocab(['invent', 'name'], {('name',)}), 'invent name')])
-    {Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1}
+    ({Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1}, {'return': OverGuessed(overinvented=1, overcopied=0)})
     """
     result: Dict[Stats, int] = defaultdict(int)
+    over_guessed: Dict[str, OverGuessed] = defaultdict(OverGuessed)
     for method, prediction in methods_and_predicitions:
         new_name_subwords = method.get_new_name_subwords()
         predicted_sub_tokens = prediction.split(' ')
         predicted_sub_token_set = set(predicted_sub_tokens)
         identifier_guessed = (method.method_name_subwords == predicted_sub_tokens)
         all_subtokens_mentioned = identifier_guessed or not set(method.method_name_subwords).difference(predicted_sub_token_set)
+        overguessed_tokens = predicted_sub_token_set.difference(method.method_name_subwords)
+        overinvented_tokens = method.get_invented_subwords_from_list(overguessed_tokens)
+        overcopied_tokens = overguessed_tokens.difference(overinvented_tokens)
+        for o in overinvented_tokens:
+            over_guessed[o].overinvented += 1
+        for o in overcopied_tokens:
+            over_guessed[o].overcopied += 1
         for i, subtoken in enumerate(method.method_name_subwords):
             result[Stats(subtoken, i == 0, subtoken in new_name_subwords, identifier_guessed, all_subtokens_mentioned, subtoken in predicted_sub_token_set)] += 1
-    return dict(result)
+    return dict(result), dict(over_guessed)
 
 
 def get_correct_predictions(dct: Dict[Stats, int]) -> int:
@@ -183,6 +198,8 @@ class InventedCopiedStats:
     _to_invent_total: int = 0
     _copied: int = 0
     _to_copy_total: int = 0
+    overcopied: int = 0
+    overinvented: int = 0
 
     def invented(self, count: int):
         self._invented += count
@@ -202,10 +219,10 @@ class InventedCopiedStats:
         return self._to_copy_total + self._to_invent_total
 
     def __repr__(self):
-        return f'(invented:{self._invented}/{self._to_invent_total}, copied: {self._copied}/{self._to_copy_total})'
+        return f'(invented:{self._invented}/{self._to_invent_total}, copied: {self._copied}/{self._to_copy_total}, over-invented/copied: {self.overinvented}--{self.overcopied})'
 
 
-def get_subword_stats(dct: Dict[Stats, int]) -> Dict[str, InventedCopiedStats]:
+def get_subword_stats(dct: Dict[Stats, int], overinvented_copied: Dict[str, OverGuessed]) -> Dict[str, InventedCopiedStats]:
     """
     >>> get_subword_stats({Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 100, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1})
     {'get': (invented:100/101, copied: 0/0), 'name': (invented:0/0, copied: 3/3), 'invent': (invented:1/1, copied: 0/0)}
@@ -222,6 +239,9 @@ def get_subword_stats(dct: Dict[Stats, int]) -> Dict[str, InventedCopiedStats]:
                 invented_copied_stats[stats.word].copied(count)
             else:
                 invented_copied_stats[stats.word].not_copied(count)
+    for word, c in overinvented_copied.items():
+        invented_copied_stats[word].overinvented = c.overinvented
+        invented_copied_stats[word].overcopied = c.overcopied
     return dict(invented_copied_stats)
 
 
@@ -230,13 +250,13 @@ if __name__ == '__main__':
     method_and_predictions_groups = classify_methods(all_methods_and_predicitions)
     for group, methods_and_predicitions in method_and_predictions_groups.items():
         print(f"\n=======   {group}  ========")
-        stats = calc_stats(methods_and_predicitions)
+        stats, overinvented_copied = calc_stats(methods_and_predicitions)
         print(f'Correctly predicted names: {get_correct_predictions(stats)}')
         print(f'Predicted permuted name: {get_permuted_predictions(stats)}')
         print(f'INcorrectly predicted names: {get_not_guessed_predictions(stats)}\n')
 
-    stats = calc_stats(all_methods_and_predicitions)
-    subword_stats = get_subword_stats(stats)
+    stats, overinvented_copied = calc_stats(all_methods_and_predicitions)
+    subword_stats = get_subword_stats(stats, overinvented_copied)
     subword_stats_sorted = sorted(subword_stats.items(), key=lambda x: x[1].total_occured(), reverse=True)
     print("Per word stats:")
     pprint(subword_stats_sorted[:300])
