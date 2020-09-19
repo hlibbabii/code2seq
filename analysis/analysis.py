@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from typing import List, Set, Tuple, Dict
 
@@ -49,6 +49,75 @@ def extract_methods_and_predicitions() -> List[Tuple[MethodVocab, str]]:
     return methodVocabs
 
 
+def classify_methods(methodVocabAndPredList: List[Tuple[MethodVocab, str]]) -> Dict[str, List[Tuple[MethodVocab, str]]]:
+    vocab = {
+        'setgetters_one_word': [],
+        'setgetters_two_words': [],
+        'setgetters_more_words': [],
+        'handlers': [],
+        'main': [],
+        '1words_0invented': [],
+        '1words_1invented': [],
+        '2words_0invented': [],
+        '2words_1invented': [],
+        '2words_2invented': [],
+        '3words_0invented': [],
+        '3words_1invented': [],
+        '3words_2invented': [],
+        '3words_3invented': [],
+        '4+words_0invented': [],
+        '4+words_1invented': [],
+        '4+words_2invented': [],
+        '4+words_3invented': [],
+        '4+words_4+invented': [],
+    }
+    for methodVocab, pred in methodVocabAndPredList:
+        name_subwords = methodVocab.method_name_subwords
+        new_name_subwords = methodVocab.get_new_name_subwords()
+        is_setter = name_subwords[0] in ['get', 'set', 'is']
+        if is_setter and len(name_subwords) == 2:
+            vocab['setgetters_one_word'].append((methodVocab, pred))
+        elif is_setter and len(name_subwords) == 3:
+            vocab['setgetters_two_words'].append((methodVocab, pred))
+        elif is_setter and len(name_subwords) > 3:
+            vocab['setgetters_more_words'].append((methodVocab, pred))
+        elif name_subwords[0] == 'on':
+            vocab['handlers'].append((methodVocab, pred))
+        elif name_subwords[0] == 'main' and len(name_subwords) == 1:
+            vocab['main'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 0 and len(name_subwords) == 1:
+            vocab['1words_0invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 1 and len(name_subwords) == 1:
+            vocab['1words_1invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 0 and len(name_subwords) == 2:
+            vocab['2words_0invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 1 and len(name_subwords) == 2:
+            vocab['2words_1invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 2 and len(name_subwords) == 2:
+            vocab['2words_2invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 0 and len(name_subwords) == 3:
+            vocab['3words_0invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 1 and len(name_subwords) == 3:
+            vocab['3words_1invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 2 and len(name_subwords) == 3:
+            vocab['3words_2invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 3 and len(name_subwords) == 3:
+            vocab['3words_3invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 0 and len(name_subwords) >= 4:
+            vocab['4+words_0invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 1 and len(name_subwords) >= 4:
+            vocab['4+words_1invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 2 and len(name_subwords) >= 4:
+            vocab['4+words_2invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) == 3 and len(name_subwords) >= 4:
+            vocab['4+words_3invented'].append((methodVocab, pred))
+        elif len(new_name_subwords) >= 4 and len(name_subwords) >= 4:
+            vocab['4+words_4+invented'].append((methodVocab, pred))
+        else:
+            raise AssertionError()
+    return vocab
+
+
 def combine_dicts(dict1: Dict[str, int], dict2: Dict[str, int]) -> Dict[str, Tuple[int, int]]:
     combined: Dict[str, Tuple[int, int]] = {}
     all_keys = set(dict1.keys())
@@ -60,31 +129,112 @@ def combine_dicts(dict1: Dict[str, int], dict2: Dict[str, int]) -> Dict[str, Tup
     return combined
 
 
-def calc_stats(methods_and_predicitions: List[Tuple[MethodVocab, str]]) -> Tuple[List[Tuple[str, Tuple[int, int]]], int, int]:
-    correct_predictions_vocab = Counter()
-    incorrect_predictions_vocab = Counter()
+@dataclass(frozen=True)
+class Stats:
+    word: str
+    first_subtoken: bool
+    invented_subtoken: bool
+    full_word_guessed: bool
+    all_subtokens_mentioned: bool
+    current_subtoken_mentioned: bool
+
+    def __post_init__(self):
+        if self.full_word_guessed:
+            assert self.all_subtokens_mentioned
+        if self.all_subtokens_mentioned:
+            assert self.current_subtoken_mentioned
+
+
+def calc_stats(methods_and_predicitions: List[Tuple[MethodVocab, str]]) -> Dict[Stats, int]:
+    """
+    >>> calc_stats([\
+(MethodVocab(['get', 'name'], {('name',)}), 'get name'), \
+(MethodVocab(['get', 'name'], {('name',)}), 'return name'), \
+(MethodVocab(['invent', 'name'], {('name',)}), 'invent name')])
+    {Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1}
+    """
+    result: Dict[Stats, int] = defaultdict(int)
     for method, prediction in methods_and_predicitions:
         new_name_subwords = method.get_new_name_subwords()
-        if new_name_subwords:
-            predicted_sub_tokens = prediction.split(' ')
-            non_predicted_words = set(new_name_subwords).difference(predicted_sub_tokens)
-            predicted_words = set(new_name_subwords).intersection(predicted_sub_tokens)
+        predicted_sub_tokens = prediction.split(' ')
+        predicted_sub_token_set = set(predicted_sub_tokens)
+        identifier_guessed = (method.method_name_subwords == predicted_sub_tokens)
+        all_subtokens_mentioned = identifier_guessed or not set(method.method_name_subwords).difference(predicted_sub_token_set)
+        for i, subtoken in enumerate(method.method_name_subwords):
+            result[Stats(subtoken, i == 0, subtoken in new_name_subwords, identifier_guessed, all_subtokens_mentioned, subtoken in predicted_sub_token_set)] += 1
+    return dict(result)
 
-            correct_predictions_vocab.update(predicted_words)
-            incorrect_predictions_vocab.update(non_predicted_words)
 
-    combined: Dict[str, Tuple[int, int]] = combine_dicts(correct_predictions_vocab, incorrect_predictions_vocab)
-    combined_sorted: List[Tuple[str, Tuple[int, int]]] = sorted(combined.items(), key=lambda x: float(x[1][1]+1) / (x[1][0]+x[1][1]+2))
-    return combined_sorted
+def get_correct_predictions(dct: Dict[Stats, int]) -> int:
+    return sum([1 for stats, _ in dct.items() if stats.first_subtoken and stats.full_word_guessed])
+
+
+def get_permuted_predictions(dct: Dict[Stats, int]) -> int:
+    return sum([1 for stats, _ in dct.items() if stats.first_subtoken and not stats.full_word_guessed and stats.all_subtokens_mentioned])
+
+
+def get_not_guessed_predictions(dct: Dict[Stats, int]) -> int:
+    return sum([1 for stats, _ in dct.items() if stats.first_subtoken and not stats.all_subtokens_mentioned])
+
+
+@dataclass
+class InventedCopiedStats:
+    _invented: int = 0
+    _to_invent_total: int = 0
+    _copied: int = 0
+    _to_copy_total: int = 0
+
+    def invented(self):
+        self._invented += 1
+        self._to_invent_total += 1
+
+    def not_invented(self):
+        self._to_invent_total += 1
+
+    def copied(self):
+        self._copied += 1
+        self._to_copy_total += 1
+
+    def not_copied(self):
+        self._to_copy_total += 1
+
+    def total_occured(self):
+        return self._to_copy_total + self._to_invent_total
+
+    def __repr__(self):
+        return f'(invented:{self._invented}/{self._to_invent_total}, copied: {self._copied}/{self._to_copy_total})'
+
+
+def get_subword_stats(dct: Dict[Stats, int]) -> Dict[str, InventedCopiedStats]:
+    """
+    >>> get_subword_stats({Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 2, Stats(word='get', first_subtoken=True, invented_subtoken=True, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=False): 1, Stats(word='name', first_subtoken=False, invented_subtoken=False, full_word_guessed=False, all_subtokens_mentioned=False, current_subtoken_mentioned=True): 1, Stats(word='invent', first_subtoken=True, invented_subtoken=True, full_word_guessed=True, all_subtokens_mentioned=True, current_subtoken_mentioned=True): 1})
+    {'get': (invented:1/2, copied: 0/0), 'name': (invented:0/0, copied: 2/2), 'invent': (invented:1/1, copied: 0/0)}
+    """
+    invented_copied_stats = defaultdict(InventedCopiedStats)
+    for stats, count in dct.items():
+        if stats.invented_subtoken:
+            if stats.current_subtoken_mentioned:
+                invented_copied_stats[stats.word].invented()
+            else:
+                invented_copied_stats[stats.word].not_invented()
+        else:
+            if stats.current_subtoken_mentioned:
+                invented_copied_stats[stats.word].copied()
+            else:
+                invented_copied_stats[stats.word].not_copied()
+    return dict(invented_copied_stats)
 
 
 if __name__ == '__main__':
     methods_and_predicitions = extract_methods_and_predicitions()
-    combined_sorted = calc_stats(methods_and_predicitions)
-    # print(f'Correctly predicted names where at least one word had to be invented: {new_correct}')
-    # print(f'INcorrectly predicted names where at least one word had to be invented: {new_incorrect}')
-    n=300
-    pprint(f'{n} most easily invented words: \n')
-    pprint(combined_sorted[:n])
-    pprint(f'{n} most difficultly invented words: \n')
-    pprint(combined_sorted[-n:])
+    method_and_predictions_groups = classify_methods(methods_and_predicitions)
+    for group, methods_and_predicitions in method_and_predictions_groups.items():
+        print(f"\n=======   {group}  ========")
+        stats = calc_stats(methods_and_predicitions)
+        subword_stats = get_subword_stats(stats)
+        subword_stats_sorted = sorted(subword_stats.items(), key=lambda x: x[1].total_occured(), reverse=True)
+        print(f'Correctly predicted names: {get_correct_predictions(stats)}')
+        print(f'Predicted permuted name: {get_permuted_predictions(stats)}')
+        print(f'INcorrectly predicted names: {get_not_guessed_predictions(stats)}\n')
+        print("Per word stats:")
+        pprint(subword_stats_sorted[:40])
