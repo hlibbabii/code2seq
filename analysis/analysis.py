@@ -4,6 +4,7 @@ from typing import List, Set, Tuple, Dict, Iterable
 
 from pathlib import Path
 from pprint import pprint
+import csv
 
 PROJECT_DIR = Path(__file__).parent.parent
 
@@ -248,15 +249,29 @@ def get_subword_stats(dct: Dict[Stats, int], overinvented_copied: Dict[str, Over
 if __name__ == '__main__':
     all_methods_and_predicitions = extract_methods_and_predicitions()
     method_and_predictions_groups = classify_methods(all_methods_and_predicitions)
-    for group, methods_and_predicitions in method_and_predictions_groups.items():
-        print(f"\n=======   {group}  ========")
-        stats, overinvented_copied = calc_stats(methods_and_predicitions)
-        print(f'Correctly predicted names: {get_correct_predictions(stats)}')
-        print(f'In wrong order or with additional words: {get_permuted_predictions(stats)}')
-        print(f'INcorrectly predicted names: {get_not_guessed_predictions(stats)}\n')
+    analysis_ouput_dir = PROJECT_DIR / 'analysis-output'
+    if not analysis_ouput_dir.exists():
+        analysis_ouput_dir.mkdir()
+    predictions_file = analysis_ouput_dir / 'predictions.csv'
+    with open(predictions_file, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["Group", "Correctly predicted", "Wrong order or with additional words", "Missing words"])
 
-    stats, overinvented_copied = calc_stats(all_methods_and_predicitions)
-    subword_stats = get_subword_stats(stats, overinvented_copied)
-    subword_stats_sorted = sorted(subword_stats.items(), key=lambda x: x[1].total_occured(), reverse=True)
-    print("Per word stats:")
-    pprint(subword_stats_sorted[:300])
+        for group, methods_and_predicitions in method_and_predictions_groups.items():
+            stats, overinvented_copied = calc_stats(methods_and_predicitions)
+            writer.writerow([group, get_correct_predictions(stats), get_permuted_predictions(stats), get_not_guessed_predictions(stats)])
+    print(f"Predictions stats is saved to {predictions_file}")
+
+    per_word_prediction_file = analysis_ouput_dir/'per-word-predictions.csv'
+    with open(per_word_prediction_file, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["Word", "Correctly invented", "To be invented",
+                         "Copied", "To be copied", "Shouldn't have invented", "Shouldn't have copied"])
+        stats, overinvented_copied = calc_stats(all_methods_and_predicitions)
+        subword_stats: Dict[str, InventedCopiedStats] = get_subword_stats(stats, overinvented_copied)
+        subword_stats_sorted: List[Tuple[str, InventedCopiedStats]] = sorted(subword_stats.items(), key=lambda x: x[1].total_occured(), reverse=True)
+
+        for row in subword_stats_sorted:
+            writer.writerow([row[0], row[1]._invented, row[1]._to_invent_total,
+                             row[1]._copied, row[1]._to_copy_total, row[1].overinvented, row[1].overcopied])
+        print(f"Per-word prediction stats is saved to {per_word_prediction_file}")
