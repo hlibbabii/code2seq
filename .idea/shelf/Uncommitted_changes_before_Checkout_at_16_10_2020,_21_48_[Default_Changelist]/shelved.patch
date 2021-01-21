@@ -1,0 +1,704 @@
+Index: ../bohr/dvc.lock
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply_heuristics:\n  cmd: python bohr/pipeline/apply_heuristics.py\n  deps:\n  - path: bohr/heuristics\n    md5: a18ce36445669159271ca76bcdc3fa98.dir\n  - path: bohr/pipeline/apply_heuristics.py\n    md5: 3fcbf8600918efe9a836cbe0b4e511be\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir\n  outs:\n  - path: generated/analysis_1151_commits.csv\n    md5: 19fc7a968297cd2b8f468ce5839716ad\n  - path: generated/analysis_berger.csv\n    md5: e2bfa560578478188d41c384aa24e3ca\n  - path: generated/analysis_herzig.csv\n    md5: d781aa2da5fbc2993e095e6a893188c2\n  - path: generated/analysis_train.csv\n    md5: 1981586a416e5126a9bf0c6fd0e17204\n  - path: generated/heuristic_matrix_1151_commits.pkl\n    md5: 3adb1251612267e002f98debcb9ed6ba\n  - path: generated/heuristic_matrix_berger.pkl\n    md5: 657c18094045cbca41fc2f039c6c1c9a\n  - path: generated/heuristic_matrix_herzig.pkl\n    md5: 68de235b1d88fdf0b54f92abf072eded\n  - path: generated/heuristic_matrix_train.pkl\n    md5: c2bfdb04a822aea324bca24d9783e0c5\n  - path: heuristic_metrics.json\n    md5: c3156e066c55a6a1babbecf838eb3c56\ntrain_label_model:\n  cmd: python bohr/pipeline/train_label_model.py\n  deps:\n  - path: bohr/pipeline/train_label_model.py\n    md5: ef9df4cb16d04f5f4e85ef4006d159d7\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir\n  - path: generated/heuristic_matrix_1151_commits.pkl\n    md5: 3adb1251612267e002f98debcb9ed6ba\n  - path: generated/heuristic_matrix_berger.pkl\n    md5: 657c18094045cbca41fc2f039c6c1c9a\n  - path: generated/heuristic_matrix_herzig.pkl\n    md5: 68de235b1d88fdf0b54f92abf072eded\n  - path: generated/heuristic_matrix_train.pkl\n    md5: c2bfdb04a822aea324bca24d9783e0c5\n  outs:\n  - path: generated/label_model.pkl\n    md5: 61b88ce245d3b350b9dd776930b91a0e\n  - path: label_model_metrics.json\n    md5: 7763c6811109997f24c65aba84002476\nextract_train_data:\n  cmd: 7z x downloaded-data/sample.7z -odata\n  deps:\n  - path: downloaded-data/sample.7z\n    md5: d4dc26c2b0f0704b1559f2c0ce6320d7\n  outs:\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\napply_heuristics_message:\n  cmd: python bohr/pipeline/apply_heuristics.py message --n-parallel=1 --commits-file\n    data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv\n  deps:\n  - path: bohr/heuristics/keywords\n    md5: f08579e81a558ffad5d4384c61d1e27e.dir\n  - path: bohr/heuristics/message.py\n    md5: 0f6faaf31deed0de5bfc02e80740302f\n  - path: bohr/pipeline/apply_heuristics.py\n    md5: a45b3a6c031bf165fd7724fc3ee6e28e\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\n  outs:\n  - path: generated/message/analysis_1151_commits.csv\n    md5: 0f09c2c98aaa665c0c41fedbaf4c3de9\n  - path: generated/message/analysis_berger.csv\n    md5: 1cc55c958f97f66f5e788220d4fb1cbe\n  - path: generated/message/analysis_herzig.csv\n    md5: 4b95be272a7c89fd57d80c8bdd80557d\n  - path: generated/message/analysis_train.csv\n    md5: ed1bc3ec659c01274c56a54306636651\n  - path: generated/message/heuristic_matrix_1151_commits.pkl\n    md5: 49f9ed2ff913ba2356ca1103a7431c1e\n  - path: generated/message/heuristic_matrix_berger.pkl\n    md5: 3365e4f286a0ac303cf596393db80571\n  - path: generated/message/heuristic_matrix_herzig.pkl\n    md5: 217db7a483f8e68d81abd6acadfd6499\n  - path: generated/message/heuristic_matrix_train.pkl\n    md5: f88e7a50745a223c2b59f11a5e1bccfa\n  - path: metrics/message/heuristic_metrics.json\n    md5: 385f959ee4f359807433d8d66fd23800\napply_heuristics_message_issues:\n  cmd: python bohr/pipeline/apply_heuristics.py message issues --n-parallel=1 --commits-file\n    data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv\n  deps:\n  - path: bohr/heuristics/issues.py\n    md5: 9bb114ec4f4ab34a4f0928b858be535b\n  - path: bohr/heuristics/keywords\n    md5: f08579e81a558ffad5d4384c61d1e27e.dir\n  - path: bohr/heuristics/message.py\n    md5: 0f6faaf31deed0de5bfc02e80740302f\n  - path: bohr/pipeline/apply_heuristics.py\n    md5: a45b3a6c031bf165fd7724fc3ee6e28e\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\n  outs:\n  - path: generated/message_issues/analysis_1151_commits.csv\n    md5: 3104f9ffc823fd4233ae87c972c17d71\n  - path: generated/message_issues/analysis_berger.csv\n    md5: 7253c7fe0567e1df18437ebeaf52a93c\n  - path: generated/message_issues/analysis_herzig.csv\n    md5: 7f40b9ccaef07bbce29140ea76bb8c58\n  - path: generated/message_issues/analysis_train.csv\n    md5: 40a82dd7a138803b40dcac34aadcefd9\n  - path: generated/message_issues/heuristic_matrix_1151_commits.pkl\n    md5: 4d96a6cc4d6544a1b6ecf4357d910f77\n  - path: generated/message_issues/heuristic_matrix_berger.pkl\n    md5: c2df77b81471064563f3661175c659ac\n  - path: generated/message_issues/heuristic_matrix_herzig.pkl\n    md5: a6a8b4e0ed7d51b54a85ea84e25a95e3\n  - path: generated/message_issues/heuristic_matrix_train.pkl\n    md5: 950db7fab28d76a489e09d48d127e1f7\n  - path: metrics/message_issues/heuristic_metrics.json\n    md5: 689df3607988445d23e3d3bb9f457e2e\napply_heuristics_message_issues_changes:\n  cmd: python bohr/pipeline/apply_heuristics.py message issues changes --n-parallel=1\n    --commits-file data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv\n    --changes-file data/train/bug_sample_files.csv\n  deps:\n  - path: bohr/heuristics/changes.py\n    md5: 9372cdc2a7c5dc09ca07006eef43c6e8\n  - path: bohr/heuristics/issues.py\n    md5: 9bb114ec4f4ab34a4f0928b858be535b\n  - path: bohr/heuristics/keywords\n    md5: f08579e81a558ffad5d4384c61d1e27e.dir\n  - path: bohr/heuristics/message.py\n    md5: 0f6faaf31deed0de5bfc02e80740302f\n  - path: bohr/pipeline/apply_heuristics.py\n    md5: a45b3a6c031bf165fd7724fc3ee6e28e\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\n  outs:\n  - path: generated/message_issues_changes/analysis_1151_commits.csv\n    md5: 44a84b87ca35bbbc34e97f29c0c4c730\n  - path: generated/message_issues_changes/analysis_berger.csv\n    md5: 3abf13529251b1bf563115f87ab2fd8f\n  - path: generated/message_issues_changes/analysis_herzig.csv\n    md5: 5298bb7427c9f2d3601b52f90e70dac1\n  - path: generated/message_issues_changes/analysis_train.csv\n    md5: bfc56897df5f3217f9841970e83a617d\n  - path: generated/message_issues_changes/heuristic_matrix_1151_commits.pkl\n    md5: 1b7ff9c91457e9f645ec6b0fed5a979d\n  - path: generated/message_issues_changes/heuristic_matrix_berger.pkl\n    md5: 3a979b0bdfc894d1893bd1712e789ede\n  - path: generated/message_issues_changes/heuristic_matrix_herzig.pkl\n    md5: 64386fd20db67449d4b56e8e4bcc80ff\n  - path: generated/message_issues_changes/heuristic_matrix_train.pkl\n    md5: f545aaa1e0b1ac82b8431f75b1b1149d\n  - path: metrics/message_issues_changes/heuristic_metrics.json\n    md5: d91e2148955910a916a977164f776bb4\ntrain_label_model_message:\n  cmd: python bohr/pipeline/train_label_model.py message\n  deps:\n  - path: bohr/pipeline/train_label_model.py\n    md5: 589ac84c34be5220126971325e4ce819\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\n  - path: generated/message/heuristic_matrix_1151_commits.pkl\n    md5: 49f9ed2ff913ba2356ca1103a7431c1e\n  - path: generated/message/heuristic_matrix_berger.pkl\n    md5: 3365e4f286a0ac303cf596393db80571\n  - path: generated/message/heuristic_matrix_herzig.pkl\n    md5: 217db7a483f8e68d81abd6acadfd6499\n  - path: generated/message/heuristic_matrix_train.pkl\n    md5: f88e7a50745a223c2b59f11a5e1bccfa\n  outs:\n  - path: generated/message/label_model.pkl\n    md5: 2ab5f95ff66ac330e48952553e39ffff\n  - path: metrics/message/label_model_metrics.json\n    md5: 1fbe9f4fa031b052d9b96709b99b74da\ntrain_label_model_message_issues:\n  cmd: python bohr/pipeline/train_label_model.py message issues\n  deps:\n  - path: bohr/pipeline/train_label_model.py\n    md5: 589ac84c34be5220126971325e4ce819\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\n  - path: generated/message_issues/heuristic_matrix_1151_commits.pkl\n    md5: 4d96a6cc4d6544a1b6ecf4357d910f77\n  - path: generated/message_issues/heuristic_matrix_berger.pkl\n    md5: c2df77b81471064563f3661175c659ac\n  - path: generated/message_issues/heuristic_matrix_herzig.pkl\n    md5: a6a8b4e0ed7d51b54a85ea84e25a95e3\n  - path: generated/message_issues/heuristic_matrix_train.pkl\n    md5: 950db7fab28d76a489e09d48d127e1f7\n  outs:\n  - path: generated/message_issues/label_model.pkl\n    md5: 56f2b08f6d95334a73486c07d58bc511\n  - path: metrics/message_issues/label_model_metrics.json\n    md5: e0f8aa8d5e793fcdb3cfbd879c459753\ntrain_label_model_message_issues_changes:\n  cmd: python bohr/pipeline/train_label_model.py message issues changes\n  deps:\n  - path: bohr/pipeline/train_label_model.py\n    md5: 589ac84c34be5220126971325e4ce819\n  - path: data/test\n    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir\n  - path: data/train\n    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir\n  - path: generated/message_issues_changes/heuristic_matrix_1151_commits.pkl\n    md5: 1b7ff9c91457e9f645ec6b0fed5a979d\n  - path: generated/message_issues_changes/heuristic_matrix_berger.pkl\n    md5: 3a979b0bdfc894d1893bd1712e789ede\n  - path: generated/message_issues_changes/heuristic_matrix_herzig.pkl\n    md5: 64386fd20db67449d4b56e8e4bcc80ff\n  - path: generated/message_issues_changes/heuristic_matrix_train.pkl\n    md5: f545aaa1e0b1ac82b8431f75b1b1149d\n  outs:\n  - path: generated/message_issues_changes/label_model.pkl\n    md5: 1f70566f244667dadd8194eabf02948e\n  - path: metrics/message_issues_changes/label_model_metrics.json\n    md5: 15f21c62a0abe11f322a8b760819a5ef\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../bohr/dvc.lock	(revision 5a4d5a121a75caa1ae9a9e29cae3b8de777a6567)
++++ ../bohr/dvc.lock	(date 1602867343592)
+@@ -98,34 +98,34 @@
+   - path: bohr/heuristics/issues.py
+     md5: 9bb114ec4f4ab34a4f0928b858be535b
+   - path: bohr/heuristics/keywords
+-    md5: f08579e81a558ffad5d4384c61d1e27e.dir
++    md5: e45b3269323da2fbc0e27b916f59df61.dir
+   - path: bohr/heuristics/message.py
+     md5: 0f6faaf31deed0de5bfc02e80740302f
+   - path: bohr/pipeline/apply_heuristics.py
+-    md5: a45b3a6c031bf165fd7724fc3ee6e28e
++    md5: 2c84ec2e12c4b6572d1a72c853591019
+   - path: data/test
+     md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+   - path: data/train
+     md5: 5df7291dd57bd397a889b63e2d12c5b2.dir
+   outs:
+   - path: generated/message_issues/analysis_1151_commits.csv
+-    md5: 3104f9ffc823fd4233ae87c972c17d71
++    md5: 8bd244e8e04fefb430d39c278adea595
+   - path: generated/message_issues/analysis_berger.csv
+-    md5: 7253c7fe0567e1df18437ebeaf52a93c
++    md5: ada507d6d54737c69c048cf1ffa244db
+   - path: generated/message_issues/analysis_herzig.csv
+-    md5: 7f40b9ccaef07bbce29140ea76bb8c58
++    md5: 9b016d566fcda08816455af5012f55f0
+   - path: generated/message_issues/analysis_train.csv
+-    md5: 40a82dd7a138803b40dcac34aadcefd9
++    md5: f441f3efcaa7bea3eb5deee3e5d3abf2
+   - path: generated/message_issues/heuristic_matrix_1151_commits.pkl
+-    md5: 4d96a6cc4d6544a1b6ecf4357d910f77
++    md5: 789eac55b34df57afe90cfdb9114eb7d
+   - path: generated/message_issues/heuristic_matrix_berger.pkl
+-    md5: c2df77b81471064563f3661175c659ac
++    md5: fc4f69cb0bcd40d041d141e590ced7dc
+   - path: generated/message_issues/heuristic_matrix_herzig.pkl
+-    md5: a6a8b4e0ed7d51b54a85ea84e25a95e3
++    md5: ebe21a7e21e15f1878d1a2333cd86a13
+   - path: generated/message_issues/heuristic_matrix_train.pkl
+-    md5: 950db7fab28d76a489e09d48d127e1f7
++    md5: 900f0f6d903604c841aaf9e285c5c179
+   - path: metrics/message_issues/heuristic_metrics.json
+-    md5: 689df3607988445d23e3d3bb9f457e2e
++    md5: 5918a35b8601cb162fb990bcf90d3d3b
+ apply_heuristics_message_issues_changes:
+   cmd: python bohr/pipeline/apply_heuristics.py message issues changes --n-parallel=1
+     --commits-file data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv
+@@ -230,3 +230,16 @@
+     md5: 1f70566f244667dadd8194eabf02948e
+   - path: metrics/message_issues_changes/label_model_metrics.json
+     md5: 15f21c62a0abe11f322a8b760819a5ef
++label_dataset_message_issues:
++  cmd: python bohr/pipeline/label_dataset.py message issues --commits-file data/train/bug_sample.csv
++    -o labeled_with_model2.csv --debug
++  deps:
++  - path: bohr/pipeline/label_dataset.py
++    md5: f48071c242d2ac596b7feebc631ced2a
++  - path: data/train
++    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir
++  - path: generated/message_issues/heuristic_matrix_train.pkl
++    md5: 900f0f6d903604c841aaf9e285c5c179
++  outs:
++  - path: labeled_with_model2.csv
++    md5: 87cdce1be1fea0c589b09b54275990a9
+Index: ../bohr/generated/message_issues/analysis_train.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>,j,Polarity,Coverage,Overlaps,Conflicts\ngithub_ref_in_message,0,[1],0.0005209514116336168,0.0005113041632700313,0.0004389498005431401\nversion_in_message,1,[0],0.014070511738289446,0.010631267696671217,0.00524810310979051\nbug_message_keyword_bad,2,[1],0.0017075629603546328,0.0015773251074462286,0.0012493186630843217\nbug_message_keyword_broken,3,[1],0.004534206730885183,0.004297849145977339,0.0036225417605263537\nbug_message_keyword_bug,4,[1],0.029178102675664334,0.027470539715309703,0.020722289484981646\nbug_message_keyword_close,5,[1],0.03840569573543386,0.03714672982398595,0.0352510455205414\nbug_message_keyword_concurr,6,[1],0.0004630679214521038,0.0004389498005431401,0.00040518443127059086\nbug_message_keyword_correct,7,[1],0.016390674969731758,0.013588149320110172,0.01202529508520932\nbug_message_keyword_corrupt,8,[1],0.0005064805390882386,0.0004823624181792748,0.00038106631036162713\nbug_message_keyword_crash,9,[1],0.004403968877976779,0.004278554649250168,0.003429596793254644\nbug_message_keyword_deadlock,10,[1],0.00033283006854369963,0.00032800644436190685,0.0002990646992711504\nbug_message_keyword_defect,11,[1],0.00010611973199944046,8.682523527226946e-05,5.7883490181512976e-05\nbug_message_keyword_disabl,12,[1],0.007486264730142345,0.006193533449421889,0.005455518949607598\nbug_message_keyword_endless,13,[1],0.0001205906045448187,0.0001205906045448187,8.682523527226946e-05\nbug_message_keyword_ensur,14,[1],0.006183886201058303,0.00563399304433393,0.005272221230699474\nbug_message_keyword_error,15,[1],0.02579674212422762,0.02418565164750884,0.019892626125713294\nbug_message_keyword_except,16,[1],0.0059137632468779094,0.005566462305788831,0.004838095054338127\nbug_message_keyword_fail,17,[1],0.014051217241562275,0.013105786901930898,0.011841997366301196\nbug_message_keyword_fix,18,[1],0.24545494011470578,0.2022207965732974,0.18168662843140565\nbug_message_keyword_garbag,19,[1],0.00019294496727170993,0.00017847409472633168,0.0001495323496355752\nbug_message_keyword_handl,20,[1],0.01437440006174239,0.013120257774476275,0.011629757902302315\nbug_message_keyword_incomplet,21,[1],0.0006560128887238137,0.000593305774360508,0.000554716780906166\nbug_message_keyword_inconsist,22,[1],0.00063189476781485,0.000593305774360508,0.0005113041632700313\nbug_message_keyword_incorrect,23,[1],0.0028845272607120635,0.0027832311528944156,0.0024262829634417523\nbug_message_keyword_infinit,24,[1],0.0007090727547235339,0.0006849546338145703,0.000554716780906166\nbug_message_keyword_invalid,25,[1],0.003183591959983214,0.003029235986165846,0.0026578169241678043\nbug_message_keyword_issue,26,[],0.0,0.0,0.0\nbug_message_keyword_leak,27,[1],0.001437440006174239,0.001360262019265555,0.0009599012121767568\nbug_message_keyword_loop,28,[1],0.0024214593392599595,0.002276750613806177,0.0019776859145350266\nbug_message_keyword_minor,29,[1],0.007356026877233941,0.005995764857968386,0.0049731565314283235\nbug_message_keyword_mistak,30,[1],0.0010804918167215756,0.0010274319507218553,0.0008393106076319382\nbug_message_keyword_npe,31,[1],0.0016352085976277415,0.0016014432283551923,0.0013747328918109333\nbug_message_keyword_not|work,32,[],0.0,0.0,0.0\nbug_message_keyword_not|return,33,[],0.0,0.0,0.0\nbug_message_keyword_of|bound,34,[1],4.8236241817927485e-06,4.8236241817927485e-06,0.0\nbug_message_keyword_patch,35,[1],0.008412400573046553,0.007380144998142905,0.006482950900329454\nbug_message_keyword_prevent,36,[1],0.006034353851422728,0.005653287541061101,0.004953862034701152\nbug_message_keyword_problem,37,[1],0.007510382851051309,0.007192023655052987,0.006034353851422728\nbug_message_keyword_properli,38,[1],0.0047850351883384065,0.004413616126340365,0.0038830174663431623\nbug_message_keyword_race|condit,39,[],0.0,0.0,0.0\nbug_message_keyword_repair,40,[1],0.00022188671236246643,0.00019294496727170993,0.00016882684636274618\nbug_message_keyword_resolv,41,[1],0.010824212663942926,0.00998490205631099,0.009208298563042356\nbug_message_keyword_threw,42,[1],0.002696405917622146,0.0026578169241678043,0.0023298104798058976\nbug_message_keyword_timeout,43,[1],0.002030745780534747,0.0017316810812635967,0.0015966196041733995\nbug_message_keyword_unabl,44,[1],0.0006801310096327775,0.0006174238952694718,0.0005643640292697516\nbug_message_keyword_unclos,45,[1],4.341261763613473e-05,3.376536927254924e-05,2.8941745090756488e-05\nbug_message_keyword_unexpect,46,[1],0.0005836585259969225,0.000574011277633337,0.0005113041632700313\nbug_message_keyword_unknown,47,[1],0.0012589659114479073,0.0011962587970846016,0.0011046099376305393\nbug_message_keyword_unsynchron,48,[],0.0,0.0,0.0\nbug_message_keyword_wrong,49,[1],0.004731975322338686,0.004413616126340365,0.0036514835056171103\nbugless_message_keyword_abil,50,[0],0.002566168064713742,0.002450401084350716,0.0014712053754467882\nbugless_message_keyword_ad,51,[0],0.06726543921509988,0.04304119857413669,0.02450401084350716\nbugless_message_keyword_add,52,[0],0.09304288684260031,0.06006859193586509,0.03603247263799183\nbugless_message_keyword_addit,53,[0],0.004302672770159131,0.003965019077433639,0.0026915822934403533\nbugless_message_keyword_allow,54,[0],0.014282751202288326,0.01175999575521072,0.009058766213406781\nbugless_message_keyword_analysi,55,[0],0.0007910743658140107,0.0006946018821781557,0.0005113041632700313\nbugless_message_keyword_avoid,56,[0],0.007100374795598926,0.006236946067058023,0.005190219619608997\nbugless_message_keyword_baselin,57,[0],0.00016882684636274618,0.0001302378529084042,8.200161109047671e-05\nbugless_message_keyword_beautification,58,[],0.0,0.0,0.0\nbugless_message_keyword_benchmark,59,[0],0.0007573089965414615,0.0005788349018151298,0.00032318282018011413\nbugless_message_keyword_better,60,[0],0.006695190364328334,0.005532696936516282,0.0041241986754328\nbugless_message_keyword_bump,61,[0],0.012459421261570668,0.010520324340489984,0.003733485116707587\nbugless_message_keyword_chang|log,62,[],0.0,0.0,0.0\nbugless_message_keyword_clean,63,[0],0.01370873992465499,0.008836879501044314,0.005836585259969225\nbugless_message_keyword_comment,64,[0],0.009806427961584657,0.008629463661227226,0.005556815057425246\nbugless_message_keyword_complet,65,[0],0.004317143642704509,0.00354536377361767,0.002546873567986571\nbugless_message_keyword_configur|chang,66,[],0.0,0.0,0.0\nbugless_message_keyword_consolid,67,[0],0.00040518443127059086,0.00031835919599832135,0.00018329771890812443\nbugless_message_keyword_convert,68,[0],0.0035164220285269134,0.0027494657836218666,0.0019487441694442703\nbugless_message_keyword_coverag,69,[0],0.0019005079276263428,0.0016930920878092547,0.0010033138298128916\nbugless_message_keyword_create,70,[],0.0,0.0,0.0\nbugless_message_keyword_deprec,71,[0],0.0036128945121627685,0.003260769946891898,0.0021561600092613585\nbugless_message_keyword_develop,72,[0],0.006989431439417692,0.00393125370816109,0.0019390969210806848\nbugless_message_keyword_doc,73,[0],0.025039433127686157,0.022453970566245242,0.014012628248107933\nbugless_message_keyword_drop,74,[0],0.003024412361984053,0.0024214593392599595,0.0016014432283551923\nbugless_message_keyword_enhanc,75,[0],0.0017268574570818039,0.0014422636303560317,0.0009502539638131714\nbugless_message_keyword_exampl,76,[0],0.0077805058052317026,0.00714378741323506,0.004408792502158572\nbugless_message_keyword_exclud,77,[0],0.0014229691336288606,0.0012493186630843217,0.0008827232252680729\nbugless_message_keyword_expand,78,[0],0.0015628542349008503,0.0013940273885381042,0.0010949626892669537\nbugless_message_keyword_extendgener,79,[],0.0,0.0,0.0\nbugless_message_keyword_featur,80,[0],0.005542344184879868,0.00494903841051936,0.002985823368529711\nbugless_message_keyword_forget,81,[0],0.00032318282018011413,0.0002604757058168084,0.00020741583981708818\nbugless_message_keyword_format,82,[0],0.00782874204704963,0.0066517777466922,0.0048863312961560535\nbugless_message_keyword_gitignor,83,[0],0.0011190808101759176,0.0009743720847221352,0.00039553718290700536\nbugless_message_keyword_idea,84,[0],0.0008441342318137309,0.0007283672514507049,0.0004727151698156893\nbugless_message_keyword_implement,85,[0],0.013414498849565632,0.010240554137946004,0.0067193084852372985\nbugless_message_keyword_improv,86,[0],0.013014138042476834,0.010100669036674014,0.006955666070145143\nbugless_message_keyword_includ,87,[0],0.00926618205322387,0.007997568893412377,0.005701523782879028\nbugless_message_keyword_info,88,[0],0.004746446194884064,0.004239965655795826,0.002619227930713462\nbugless_message_keyword_intorduc,89,[],0.0,0.0,0.0\nbugless_message_keyword_limit,90,[0],0.002797702025439794,0.0024455774601689234,0.0018426244374448299\nbugless_message_keyword_log,91,[0],0.011499520049393912,0.009796780713221072,0.007206494527598366\nbugless_message_keyword_migrat,92,[0],0.0037913686068891,0.0029906469927115037,0.001987333162898612\nbugless_message_keyword_minim,93,[0],0.000612600271087679,0.0005450695325425806,0.00033765369272549235\nbugless_message_keyword_modif,94,[0],0.0012010824212663944,0.0008537814801773164,0.000612600271087679\nbugless_message_keyword_move,95,[0],0.01651608919845837,0.011470578304303156,0.007500735602687723\nbugless_message_keyword_new,96,[0],0.037214260562531055,0.0312619083221988,0.01382933052919981\nbugless_message_keyword_note,97,[0],0.006810957344691361,0.0063189476781485,0.0036177181363445613\nbugless_message_keyword_opinion,98,[0],5.7883490181512976e-05,5.305986599972023e-05,3.858899345434199e-05\nbugless_message_keyword_optim,99,[0],0.0031739447116196284,0.002324986855624105,0.0015580306107190578\nbugless_message_keyword_pass|test,100,[],0.0,0.0,0.0\nbugless_message_keyword_perf|test,101,[],0.0,0.0,0.0\nbugless_message_keyword_perfom|test,102,[],0.0,0.0,0.0\nbugless_message_keyword_perform,103,[0],0.002821820146348758,0.002643346051622426,0.001953567793626063\nbugless_message_keyword_plugin,104,[0],0.005875174253423567,0.005185395995427204,0.0029231162541664053\nbugless_message_keyword_polish,105,[0],0.0004534206730885183,0.00033765369272549235,0.00017847409472633168\nbugless_message_keyword_possibl,106,[0],0.004920096665428603,0.004582442972703111,0.0037479559892529654\nbugless_message_keyword_prepar,107,[0],0.00496833290724653,0.003241475450164727,0.0012396714147207362\nbugless_message_keyword_propos,108,[0],0.000689778257996363,0.0006608365129056065,0.000535422284178995\nbugless_message_keyword_provid,109,[0],0.0057787017697877125,0.0051275125052456915,0.0038781938421613696\nbugless_message_keyword_publish,110,[0],0.004596913845248489,0.001722033832900011,0.0011431989310848813\nbugless_message_keyword_readm,111,[0],0.009386772657768688,0.008277339095956356,0.0023394577281694827\nbugless_message_keyword_reduc,112,[0],0.0022574561170790063,0.0018136826923540732,0.001283084032356871\nbugless_message_keyword_refactor,113,[0],0.013240848379021094,0.00939159628195048,0.006261064187966987\nbugless_message_keyword_refin,114,[0],0.0007187200030871195,0.000574011277633337,0.00038106631036162713\nbugless_message_keyword_reformat,115,[0],0.0007573089965414615,0.0005788349018151298,0.0004775387939974821\nbugless_message_keyword_regress|test,116,[],0.0,0.0,0.0\nbugless_message_keyword_reimplement,117,[0],0.00031353557181652863,0.0002315339607260519,0.0001495323496355752\nbugless_message_keyword_release,118,[],0.0,0.0,0.0\nbugless_message_keyword_remov,119,[0],0.052649857944267846,0.036654720157443095,0.025213083598230695\nbugless_message_keyword_renam,120,[0],0.009820898834130036,0.005937881367786873,0.003767250485980136\nbugless_message_keyword_reorgan,121,[0],0.0005257750358154096,0.00031835919599832135,0.00017847409472633168\nbugless_message_keyword_replac,122,[0],0.008069923256139267,0.006338242174875671,0.004765740691611235\nbugless_message_keyword_restrict,123,[0],0.0010467264474490264,0.0009502539638131714,0.0007910743658140107\nbugless_message_keyword_restructur,124,[0],0.0006946018821781557,0.0005257750358154096,0.00041483167963417636\nbugless_message_keyword_review,125,[0],0.0061018845899678265,0.005508578815607319,0.0034344204174364366\nbugless_message_keyword_rewrit,126,[0],0.0014567345029014099,0.0011046099376305393,0.0008103688625411817\nbugless_message_keyword_rid,127,[0],0.001302378529084042,0.0009599012121767568,0.0006174238952694718\nbugless_message_keyword_set|up,128,[],0.0,0.0,0.0\nbugless_message_keyword_simplif,129,[0],0.00018329771890812443,0.0001495323496355752,9.647248363585496e-05\nbugless_message_keyword_simplifi,130,[0],0.0033813605514367165,0.002455224708532509,0.0017895645714451095\nbugless_message_keyword_speedup,131,[0],0.00011094335618123321,0.00010129610781764771,7.235436272689123e-05\nbugless_message_keyword_stage,132,[0],0.0010515500716308192,0.0008923704736316584,0.000670483761269192\nbugless_message_keyword_stat,133,[0],0.0015483833623554722,0.0010660209441761973,0.000612600271087679\nbugless_message_keyword_statist,134,[0],0.000496833290724653,0.00044377342472493286,0.00029424107508935763\nbugless_message_keyword_support,135,[0],0.023563404128057575,0.02057275713534607,0.012030118709391115\nbugless_message_keyword_switch,136,[0],0.005397635459426085,0.004264083776704789,0.003178768335801421\nbugless_message_keyword_test,137,[0],0.05603604211988635,0.04840989228847202,0.03266558295910049\nbugless_message_keyword_test|coverag,138,[],0.0,0.0,0.0\nbugless_message_keyword_test|pass,139,[],0.0,0.0,0.0\nbugless_message_keyword_todo,140,[0],0.0019439205452624776,0.0016786212152638763,0.0007669562449050469\nbugless_message_keyword_tweak,141,[0],0.0031739447116196284,0.0020596875256255033,0.0012782604081750782\nbugless_message_keyword_unit,142,[0],0.005204690492154375,0.00502139277324625,0.00335241880634596\nbugless_message_keyword_unnecessari,143,[0],0.003135355718165286,0.0030678249796201877,0.0019487441694442703\nbugless_message_keyword_updat,144,[0],0.11775431352592457,0.055809331783342096,0.0296652887180254\nbugless_message_keyword_upgrad,145,[0],0.005561638681607039,0.003849252097070613,0.0024407538359871306\nbugless_message_keyword_version,146,[0],0.037257673180167185,0.03230381114546604,0.010973745013578503\nbug_issue_body_keyword_bad,147,[1],0.0032077100808921774,0.003198062832528592,0.0031546502148924573\nbug_issue_body_keyword_broken,148,[1],0.0060005884821501786,0.005995764857968386,0.005894468750150738\nbug_issue_body_keyword_bug,149,[1],0.04434840072740252,0.044295340861402806,0.04366344609358796\nbug_issue_body_keyword_close,150,[1],0.018054825312450257,0.01779434960663345,0.01728786906754521\nbug_issue_body_keyword_concurr,151,[1],0.0005257750358154096,0.0005257750358154096,0.0005113041632700313\nbug_issue_body_keyword_correct,152,[1],0.01853236410644774,0.018508245985538775,0.018247770279721968\nbug_issue_body_keyword_corrupt,153,[1],0.000574011277633337,0.000574011277633337,0.000554716780906166\nbug_issue_body_keyword_crash,154,[1],0.006405772913420769,0.00637200754414822,0.006241769691239816\nbug_issue_body_keyword_deadlock,155,[1],0.0002701229541803939,0.0002701229541803939,0.0002556520816350156\nbug_issue_body_keyword_defect,156,[1],0.0002556520816350156,0.0002556520816350156,0.0002556520816350156\nbug_issue_body_keyword_disabl,157,[1],0.00621282794614906,0.006208004321967267,0.0061018845899678265\nbug_issue_body_keyword_endless,158,[1],0.00016882684636274618,0.00016882684636274618,0.00016400322218095343\nbug_issue_body_keyword_ensur,159,[1],0.006622836001601443,0.006608365129056065,0.006540834390510966\nbug_issue_body_keyword_error,160,[1],0.052799390293903424,0.05270774143444936,0.05156936612754627\nbug_issue_body_keyword_except,161,[1],0.01688268463627462,0.016858566515365655,0.016593267185367053\nbug_issue_body_keyword_fail,162,[1],0.028686093009121474,0.02866197488821251,0.02822302508766937\nbug_issue_body_keyword_fix,163,[1],0.06382619517348165,0.06317018228475783,0.060985080530405716\nbug_issue_body_keyword_garbag,164,[1],0.0004920096665428604,0.0004920096665428604,0.0004727151698156893\nbug_issue_body_keyword_handl,165,[1],0.010018667425583537,0.009999372928856366,0.00981125158576645\nbug_issue_body_keyword_incomplet,166,[1],0.0007187200030871195,0.0007187200030871195,0.0007138963789053267\nbug_issue_body_keyword_inconsist,167,[1],0.0013699092676291405,0.0013650856434473477,0.0013554383950837622\nbug_issue_body_keyword_incorrect,168,[1],0.003294535316164447,0.0032848880678008614,0.0032318282018011413\nbug_issue_body_keyword_infinit,169,[1],0.0007187200030871195,0.0007187200030871195,0.0007090727547235339\nbug_issue_body_keyword_invalid,170,[1],0.00675789747869164,0.006743426606146262,0.006685543115964749\nbug_issue_body_keyword_issue,171,[],0.0,0.0,0.0\nbug_issue_body_keyword_leak,172,[1],0.001148022555266674,0.001148022555266674,0.0011431989310848813\nbug_issue_body_keyword_loop,173,[1],0.0024648719568960945,0.0024648719568960945,0.002397341218350996\nbug_issue_body_keyword_minor,174,[1],0.0031160612214381155,0.00310641397307453,0.003082295852165566\nbug_issue_body_keyword_mistak,175,[1],0.0007524853723596687,0.0007476617481778759,0.0007235436272689123\nbug_issue_body_keyword_npe,176,[1],0.0011721406761756377,0.0011721406761756377,0.001148022555266674\nbug_issue_body_keyword_not|work,177,[],0.0,0.0,0.0\nbug_issue_body_keyword_not|return,178,[],0.0,0.0,0.0\nbug_issue_body_keyword_of|bound,179,[],0.0,0.0,0.0\nbug_issue_body_keyword_patch,180,[1],0.004920096665428603,0.004900802168701432,0.004833271430156333\nbug_issue_body_keyword_prevent,181,[1],0.005243279485608717,0.005233632237245132,0.005088923511791349\nbug_issue_body_keyword_problem,182,[1],0.027552541326400178,0.027499481460400457,0.02715700414349317\nbug_issue_body_keyword_properli,183,[1],0.005629169420152137,0.005614698547606759,0.005523049688152697\nbug_issue_body_keyword_race|condit,184,[],0.0,0.0,0.0\nbug_issue_body_keyword_repair,185,[1],0.00015917959799916068,0.00015917959799916068,0.00015917959799916068\nbug_issue_body_keyword_resolv,186,[1],0.015459715502645757,0.015372890267373488,0.01505935469555696\nbug_issue_body_keyword_threw,187,[1],0.007298143387052428,0.007298143387052428,0.007177552782507609\nbug_issue_body_keyword_timeout,188,[1],0.0019825095387168193,0.0019825095387168193,0.0019632150419896487\nbug_issue_body_keyword_unabl,189,[1],0.0035694818945266335,0.0035694818945266335,0.0035164220285269134\nbug_issue_body_keyword_unclos,190,[1],0.00010129610781764771,0.00010129610781764771,9.647248363585496e-05\nbug_issue_body_keyword_unexpect,191,[1],0.002792878401258001,0.002792878401258001,0.002744642159440074\nbug_issue_body_keyword_unknown,192,[1],0.004842918678519919,0.004842918678519919,0.004770564315793028\nbug_issue_body_keyword_unsynchron,193,[],0.0,0.0,0.0\nbug_issue_body_keyword_wrong,194,[1],0.008026510638503133,0.008012039765957754,0.007867331040503972\nbug_issue_label_keyword_bug,195,[1],0.19998745857712732,0.19998745857712732,0.19998745857712732\nbug_issue_label_keyword_fixed,196,[],0.0,0.0,0.0\nbug_issue_label_keyword_fix,197,[1],0.0055905804266977955,0.0055905804266977955,0.0055905804266977955\nbug_issue_label_keyword_error,198,[1],1.9294496727170994e-05,1.9294496727170994e-05,1.9294496727170994e-05\nbugless_issue_body_keyword_abil,199,[0],0.002324986855624105,0.0022333379961700425,0.002011451283807576\nbugless_issue_body_keyword_ad,200,[0],0.028208554215123992,0.028107258107306344,0.026496167630587566\nbugless_issue_body_keyword_add,201,[0],0.037696622980710325,0.03750850163762041,0.035077395049996865\nbugless_issue_body_keyword_addit,202,[0],0.013400027977020255,0.013390380728656668,0.013062374284294761\nbugless_issue_body_keyword_allow,203,[0],0.012932136431386358,0.012874252941204844,0.011972235219209601\nbugless_issue_body_keyword_analysi,204,[0],0.0014663817512649954,0.0014663817512649954,0.0014181455094470679\nbugless_issue_body_keyword_avoid,205,[0],0.006097060965786034,0.00607294284487707,0.005855879756696396\nbugless_issue_body_keyword_baselin,206,[0],0.00019776859145350268,0.00019294496727170993,0.00018812134308991718\nbugless_issue_body_keyword_beautification,207,[],0.0,0.0,0.0\nbugless_issue_body_keyword_benchmark,208,[0],0.0005836585259969225,0.0005836585259969225,0.000535422284178995\nbugless_issue_body_keyword_better,209,[0],0.005653287541061101,0.0056243457959703445,0.0053879882110625\nbugless_issue_body_keyword_bump,210,[0],0.002199572626897493,0.002199572626897493,0.0020403930288983327\nbugless_issue_body_keyword_chang|log,211,[],0.0,0.0,0.0\nbugless_issue_body_keyword_clean,212,[0],0.00496833290724653,0.004944214786337567,0.004707857201429722\nbugless_issue_body_keyword_comment,213,[0],0.010587855079035082,0.010558913333944325,0.01023090688958242\nbugless_issue_body_keyword_complet,214,[0],0.01019714152030987,0.01016337615103732,0.00993666581449306\nbugless_issue_body_keyword_configur|chang,215,[],0.0,0.0,0.0\nbugless_issue_body_keyword_consolid,216,[0],0.0002411812090896374,0.00020259221563529543,0.00018329771890812443\nbugless_issue_body_keyword_convert,217,[0],0.0035164220285269134,0.0035164220285269134,0.0034199495448910583\nbugless_issue_body_keyword_coverag,218,[0],0.002112747391625224,0.002112747391625224,0.0019680386661714414\nbugless_issue_body_keyword_create,219,[],0.0,0.0,0.0\nbugless_issue_body_keyword_deprec,220,[0],0.003424773169072851,0.0034199495448910583,0.003048530482893017\nbugless_issue_body_keyword_develop,221,[0],0.008668052654681568,0.008610169164500055,0.008286986344319942\nbugless_issue_body_keyword_doc,222,[0],0.02778407528712623,0.0277358390453083,0.02636592977767916\nbugless_issue_body_keyword_drop,223,[0],0.003024412361984053,0.0030195887378022604,0.002932763502529991\nbugless_issue_body_keyword_enhanc,224,[0],0.010481735347035642,0.010476911722853848,0.010370791990854408\nbugless_issue_body_keyword_exampl,225,[0],0.028213377839305782,0.02816996522166965,0.02709912065331166\nbugless_issue_body_keyword_exclud,226,[0],0.0012637895356297,0.0012541422872661145,0.001186611548721016\nbugless_issue_body_keyword_expand,227,[0],0.0019005079276263428,0.0018860370550809644,0.0017943881956269023\nbugless_issue_body_keyword_extendgener,228,[],0.0,0.0,0.0\nbugless_issue_body_keyword_featur,229,[0],0.019545325184624214,0.01952120706371525,0.01897131390699088\nbugless_issue_body_keyword_forget,230,[0],0.000496833290724653,0.000496833290724653,0.00044377342472493286\nbugless_issue_body_keyword_format,231,[0],0.010973745013578503,0.010939979644305953,0.010616796824125838\nbugless_issue_body_keyword_gitignor,232,[0],8.200161109047671e-05,8.200161109047671e-05,6.753073854509848e-05\nbugless_issue_body_keyword_idea,233,[0],0.006077766469058863,0.0060681192206952774,0.00587999787760536\nbugless_issue_body_keyword_implement,234,[0],0.013896861267744908,0.013781094287381881,0.01275848596084182\nbugless_issue_body_keyword_improv,235,[0],0.005344575593426365,0.005325281096699194,0.004982803779791909\nbugless_issue_body_keyword_includ,236,[0],0.01996980411262198,0.019911920622440463,0.01918355337098976\nbugless_issue_body_keyword_info,237,[0],0.01231953616029868,0.012314712536116885,0.012097649447936213\nbugless_issue_body_keyword_intorduc,238,[],0.0,0.0,0.0\nbugless_issue_body_keyword_limit,239,[0],0.005421753580335049,0.005402459083607878,0.005141983377791069\nbugless_issue_body_keyword_log,240,[0],0.01607713939791523,0.016053021277006266,0.015671954966644638\nbugless_issue_body_keyword_migrat,241,[0],0.00510821800851852,0.00510821800851852,0.00491527304124681\nbugless_issue_body_keyword_minim,242,[0],0.006555305263056345,0.006555305263056345,0.006497421772874832\nbugless_issue_body_keyword_modif,243,[0],0.0013843801401745186,0.0013843801401745186,0.0013554383950837622\nbugless_issue_body_keyword_move,244,[0],0.008378635203774003,0.008340046210319661,0.007756387684322739\nbugless_issue_body_keyword_new,245,[0],0.045896784089757996,0.0458292533512129,0.04366344609358796\nbugless_issue_body_keyword_note,246,[0],0.014060864489925861,0.014046393617380483,0.013366262607747705\nbugless_issue_body_keyword_opinion,247,[0],0.0004293025521795546,0.0004293025521795546,0.0004100080554523836\nbugless_issue_body_keyword_optim,248,[0],0.0023153396072605192,0.0023153396072605192,0.002242985244533628\nbugless_issue_body_keyword_pass|test,249,[],0.0,0.0,0.0\nbugless_issue_body_keyword_perf|test,250,[],0.0,0.0,0.0\nbugless_issue_body_keyword_perfom|test,251,[],0.0,0.0,0.0\nbugless_issue_body_keyword_perform,252,[0],0.006347889423239257,0.006347889423239257,0.006150120831785754\nbugless_issue_body_keyword_plugin,253,[0],0.008557109298500336,0.00854746205013675,0.0081808666123205\nbugless_issue_body_keyword_polish,254,[0],0.00017365047054453893,0.00017365047054453893,0.00015917959799916068\nbugless_issue_body_keyword_possibl,255,[0],0.015946901545006824,0.015913136175734276,0.015430773757555001\nbugless_issue_body_keyword_prepar,256,[0],0.001437440006174239,0.0014326163819924462,0.0013506147709019694\nbugless_issue_body_keyword_propos,257,[0],0.005373517338517122,0.005359046465971743,0.00502139277324625\nbugless_issue_body_keyword_provid,258,[0],0.016675268796457532,0.016646327051366774,0.015585129731372369\nbugless_issue_body_keyword_publish,259,[0],0.003193239208346799,0.0031884155841650067,0.0030195887378022604\nbugless_issue_body_keyword_readm,260,[0],0.0030774722279837733,0.0030726486038019805,0.002898998133257442\nbugless_issue_body_keyword_reduc,261,[0],0.0018860370550809644,0.0018715661825355863,0.0017895645714451095\nbugless_issue_body_keyword_refactor,262,[0],0.007274025266143464,0.007264378017779878,0.00705696217796279\nbugless_issue_body_keyword_refin,263,[0],0.0005691876534515443,0.0005691876534515443,0.0005402459083607878\nbugless_issue_body_keyword_reformat,264,[0],0.00020259221563529543,0.00020259221563529543,0.00019294496727170993\nbugless_issue_body_keyword_regress|test,265,[],0.0,0.0,0.0\nbugless_issue_body_keyword_reimplement,266,[0],0.00023635758490784465,0.00022671033654425915,0.00010611973199944046\nbugless_issue_body_keyword_release,267,[],0.0,0.0,0.0\nbugless_issue_body_keyword_remov,268,[0],0.025227554470776074,0.025131081987140216,0.023582698624784747\nbugless_issue_body_keyword_renam,269,[0],0.002247808868715421,0.002242985244533628,0.0020838056465344672\nbugless_issue_body_keyword_reorgan,270,[0],7.235436272689123e-05,7.235436272689123e-05,5.7883490181512976e-05\nbugless_issue_body_keyword_replac,271,[0],0.007167905534144024,0.007114845668144304,0.00675789747869164\nbugless_issue_body_keyword_restrict,272,[0],0.001398851012719897,0.001398851012719897,0.0013313202741747985\nbugless_issue_body_keyword_restructur,273,[0],0.00036177181363445613,0.00036177181363445613,0.00035694818945266335\nbugless_issue_body_keyword_review,274,[0],0.008190513860684086,0.008103688625411817,0.007659915200686884\nbugless_issue_body_keyword_rewrit,275,[0],0.0008827232252680729,0.0008730759769044874,0.0008248397350865599\nbugless_issue_body_keyword_rid,276,[0],0.0009743720847221352,0.0009743720847221352,0.0009213122187224149\nbugless_issue_body_keyword_set|up,277,[],0.0,0.0,0.0\nbugless_issue_body_keyword_simplif,278,[0],8.682523527226946e-05,8.682523527226946e-05,7.717798690868398e-05\nbugless_issue_body_keyword_simplifi,279,[0],0.0014712053754467882,0.0014567345029014099,0.0013650856434473477\nbugless_issue_body_keyword_speedup,280,[0],3.858899345434199e-05,3.858899345434199e-05,3.858899345434199e-05\nbugless_issue_body_keyword_stage,281,[0],0.0012348477905389436,0.0012300241663571508,0.0011914351729028088\nbugless_issue_body_keyword_stat,282,[0],0.0009695484605403424,0.0009695484605403424,0.0009454303396313786\nbugless_issue_body_keyword_statist,283,[0],0.00040518443127059086,0.0004003608070887981,0.00036177181363445613\nbugless_issue_body_keyword_support,284,[0],0.016979157119910472,0.016858566515365655,0.015421126509191417\nbugless_issue_body_keyword_switch,285,[0],0.005286692103244852,0.0052818684790630595,0.0050551581425188\nbugless_issue_body_keyword_test,286,[0],0.05055640504936979,0.05045510894155215,0.04823624181792748\nbugless_issue_body_keyword_test|coverag,287,[],0.0,0.0,0.0\nbugless_issue_body_keyword_test|pass,288,[],0.0,0.0,0.0\nbugless_issue_body_keyword_todo,289,[0],0.0023298104798058976,0.002320163231442312,0.0021609836334431512\nbugless_issue_body_keyword_tweak,290,[0],0.0005595404050879588,0.0005595404050879588,0.0005209514116336168\nbugless_issue_body_keyword_unit,291,[0],0.006946018821781558,0.006946018821781558,0.006690366740146542\nbugless_issue_body_keyword_unnecessari,292,[0],0.0011576698036302596,0.0011576698036302596,0.0010804918167215756\nbugless_issue_body_keyword_updat,293,[0],0.03426220256327389,0.03412714108618369,0.03216392604419405\nbugless_issue_body_keyword_upgrad,294,[0],0.0058269380116056394,0.005817290763242054,0.005455518949607598\nbugless_issue_body_keyword_version,295,[0],0.05591062789115974,0.055741801044797,0.05401976721189699\nbugless_issue_label_keyword_bug,296,[0],0.19998745857712732,0.19998745857712732,0.19998745857712732\nbugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0\nbugless_issue_label_keyword_fix,298,[0],0.0055905804266977955,0.0055905804266977955,0.0055905804266977955\nbugless_issue_label_keyword_error,299,[0],1.9294496727170994e-05,1.9294496727170994e-05,1.9294496727170994e-05\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../bohr/generated/message_issues/analysis_train.csv	(revision 5a4d5a121a75caa1ae9a9e29cae3b8de777a6567)
++++ ../bohr/generated/message_issues/analysis_train.csv	(date 1602866736583)
+@@ -1,301 +1,303 @@
+ ,j,Polarity,Coverage,Overlaps,Conflicts
+-github_ref_in_message,0,[1],0.0005209514116336168,0.0005113041632700313,0.0004389498005431401
+-version_in_message,1,[0],0.014070511738289446,0.010631267696671217,0.00524810310979051
+-bug_message_keyword_bad,2,[1],0.0017075629603546328,0.0015773251074462286,0.0012493186630843217
+-bug_message_keyword_broken,3,[1],0.004534206730885183,0.004297849145977339,0.0036225417605263537
+-bug_message_keyword_bug,4,[1],0.029178102675664334,0.027470539715309703,0.020722289484981646
+-bug_message_keyword_close,5,[1],0.03840569573543386,0.03714672982398595,0.0352510455205414
+-bug_message_keyword_concurr,6,[1],0.0004630679214521038,0.0004389498005431401,0.00040518443127059086
+-bug_message_keyword_correct,7,[1],0.016390674969731758,0.013588149320110172,0.01202529508520932
+-bug_message_keyword_corrupt,8,[1],0.0005064805390882386,0.0004823624181792748,0.00038106631036162713
+-bug_message_keyword_crash,9,[1],0.004403968877976779,0.004278554649250168,0.003429596793254644
+-bug_message_keyword_deadlock,10,[1],0.00033283006854369963,0.00032800644436190685,0.0002990646992711504
+-bug_message_keyword_defect,11,[1],0.00010611973199944046,8.682523527226946e-05,5.7883490181512976e-05
+-bug_message_keyword_disabl,12,[1],0.007486264730142345,0.006193533449421889,0.005455518949607598
+-bug_message_keyword_endless,13,[1],0.0001205906045448187,0.0001205906045448187,8.682523527226946e-05
+-bug_message_keyword_ensur,14,[1],0.006183886201058303,0.00563399304433393,0.005272221230699474
+-bug_message_keyword_error,15,[1],0.02579674212422762,0.02418565164750884,0.019892626125713294
+-bug_message_keyword_except,16,[1],0.0059137632468779094,0.005566462305788831,0.004838095054338127
+-bug_message_keyword_fail,17,[1],0.014051217241562275,0.013105786901930898,0.011841997366301196
+-bug_message_keyword_fix,18,[1],0.24545494011470578,0.2022207965732974,0.18168662843140565
+-bug_message_keyword_garbag,19,[1],0.00019294496727170993,0.00017847409472633168,0.0001495323496355752
+-bug_message_keyword_handl,20,[1],0.01437440006174239,0.013120257774476275,0.011629757902302315
+-bug_message_keyword_incomplet,21,[1],0.0006560128887238137,0.000593305774360508,0.000554716780906166
+-bug_message_keyword_inconsist,22,[1],0.00063189476781485,0.000593305774360508,0.0005113041632700313
+-bug_message_keyword_incorrect,23,[1],0.0028845272607120635,0.0027832311528944156,0.0024262829634417523
+-bug_message_keyword_infinit,24,[1],0.0007090727547235339,0.0006849546338145703,0.000554716780906166
+-bug_message_keyword_invalid,25,[1],0.003183591959983214,0.003029235986165846,0.0026578169241678043
++github_ref_in_message,0,[],0.0,0.0,0.0
++version_in_message,1,[0],0.0185,0.0135,0.007
++bug_message_keyword_bad,2,[1],0.001,0.001,0.0005
++bug_message_keyword_broken,3,[1],0.003,0.003,0.0015
++bug_message_keyword_bug,4,[1],0.049,0.047,0.0255
++bug_message_keyword_close,5,[1],0.011,0.0095,0.007
++bug_message_keyword_concurr,6,[],0.0,0.0,0.0
++bug_message_keyword_correct,7,[1],0.0145,0.0115,0.0085
++bug_message_keyword_corrupt,8,[1],0.0005,0.0005,0.0
++bug_message_keyword_crash,9,[1],0.0045,0.0045,0.004
++bug_message_keyword_dead|lock,10,[],0.0,0.0,0.0
++bug_message_keyword_defect,11,[],0.0,0.0,0.0
++bug_message_keyword_disabl,12,[1],0.004,0.003,0.0025
++bug_message_keyword_endless,13,[1],0.0005,0.0005,0.0
++bug_message_keyword_ensur,14,[1],0.004,0.0025,0.0025
++bug_message_keyword_error,15,[1],0.0215,0.019,0.0145
++bug_message_keyword_except,16,[1],0.004,0.0035,0.003
++bug_message_keyword_fail,17,[1],0.013,0.012,0.008
++bug_message_keyword_fix,18,[1],0.1935,0.1445,0.098
++bug_message_keyword_garbag,19,[],0.0,0.0,0.0
++bug_message_keyword_handl,20,[1],0.015,0.013,0.011
++bug_message_keyword_incomplet,21,[1],0.001,0.001,0.001
++bug_message_keyword_inconsist,22,[1],0.0015,0.0015,0.0015
++bug_message_keyword_incorrect,23,[1],0.002,0.0015,0.001
++bug_message_keyword_infinit,24,[1],0.001,0.001,0.001
++bug_message_keyword_invalid,25,[1],0.0035,0.0035,0.0015
+ bug_message_keyword_issue,26,[],0.0,0.0,0.0
+-bug_message_keyword_leak,27,[1],0.001437440006174239,0.001360262019265555,0.0009599012121767568
+-bug_message_keyword_loop,28,[1],0.0024214593392599595,0.002276750613806177,0.0019776859145350266
+-bug_message_keyword_minor,29,[1],0.007356026877233941,0.005995764857968386,0.0049731565314283235
+-bug_message_keyword_mistak,30,[1],0.0010804918167215756,0.0010274319507218553,0.0008393106076319382
+-bug_message_keyword_npe,31,[1],0.0016352085976277415,0.0016014432283551923,0.0013747328918109333
++bug_message_keyword_leak,27,[1],0.002,0.002,0.0015
++bug_message_keyword_loop,28,[1],0.003,0.003,0.0025
++bug_message_keyword_minor,29,[1],0.009,0.0075,0.0045
++bug_message_keyword_mistak,30,[1],0.0015,0.0015,0.001
++bug_message_keyword_npe,31,[],0.0,0.0,0.0
+ bug_message_keyword_not|work,32,[],0.0,0.0,0.0
+ bug_message_keyword_not|return,33,[],0.0,0.0,0.0
+-bug_message_keyword_of|bound,34,[1],4.8236241817927485e-06,4.8236241817927485e-06,0.0
+-bug_message_keyword_patch,35,[1],0.008412400573046553,0.007380144998142905,0.006482950900329454
+-bug_message_keyword_prevent,36,[1],0.006034353851422728,0.005653287541061101,0.004953862034701152
+-bug_message_keyword_problem,37,[1],0.007510382851051309,0.007192023655052987,0.006034353851422728
+-bug_message_keyword_properli,38,[1],0.0047850351883384065,0.004413616126340365,0.0038830174663431623
++bug_message_keyword_of|bound,34,[],0.0,0.0,0.0
++bug_message_keyword_patch,35,[1],0.006,0.005,0.0045
++bug_message_keyword_prevent,36,[1],0.004,0.0035,0.003
++bug_message_keyword_problem,37,[1],0.009,0.009,0.007
++bug_message_keyword_properli,38,[1],0.0035,0.0025,0.002
+ bug_message_keyword_race|condit,39,[],0.0,0.0,0.0
+-bug_message_keyword_repair,40,[1],0.00022188671236246643,0.00019294496727170993,0.00016882684636274618
+-bug_message_keyword_resolv,41,[1],0.010824212663942926,0.00998490205631099,0.009208298563042356
+-bug_message_keyword_threw,42,[1],0.002696405917622146,0.0026578169241678043,0.0023298104798058976
+-bug_message_keyword_timeout,43,[1],0.002030745780534747,0.0017316810812635967,0.0015966196041733995
+-bug_message_keyword_unabl,44,[1],0.0006801310096327775,0.0006174238952694718,0.0005643640292697516
+-bug_message_keyword_unclos,45,[1],4.341261763613473e-05,3.376536927254924e-05,2.8941745090756488e-05
+-bug_message_keyword_unexpect,46,[1],0.0005836585259969225,0.000574011277633337,0.0005113041632700313
+-bug_message_keyword_unknown,47,[1],0.0012589659114479073,0.0011962587970846016,0.0011046099376305393
++bug_message_keyword_repair,40,[1],0.0005,0.0005,0.0005
++bug_message_keyword_resolv,41,[1],0.0125,0.0085,0.0075
++bug_message_keyword_threw,42,[1],0.001,0.001,0.001
++bug_message_keyword_timeout,43,[1],0.002,0.0015,0.0015
++bug_message_keyword_unabl,44,[],0.0,0.0,0.0
++bug_message_keyword_unclos,45,[],0.0,0.0,0.0
++bug_message_keyword_unexpect,46,[1],0.0005,0.0005,0.0005
++bug_message_keyword_unknown,47,[],0.0,0.0,0.0
+ bug_message_keyword_unsynchron,48,[],0.0,0.0,0.0
+-bug_message_keyword_wrong,49,[1],0.004731975322338686,0.004413616126340365,0.0036514835056171103
+-bugless_message_keyword_abil,50,[0],0.002566168064713742,0.002450401084350716,0.0014712053754467882
+-bugless_message_keyword_ad,51,[0],0.06726543921509988,0.04304119857413669,0.02450401084350716
+-bugless_message_keyword_add,52,[0],0.09304288684260031,0.06006859193586509,0.03603247263799183
+-bugless_message_keyword_addit,53,[0],0.004302672770159131,0.003965019077433639,0.0026915822934403533
+-bugless_message_keyword_allow,54,[0],0.014282751202288326,0.01175999575521072,0.009058766213406781
+-bugless_message_keyword_analysi,55,[0],0.0007910743658140107,0.0006946018821781557,0.0005113041632700313
+-bugless_message_keyword_avoid,56,[0],0.007100374795598926,0.006236946067058023,0.005190219619608997
+-bugless_message_keyword_baselin,57,[0],0.00016882684636274618,0.0001302378529084042,8.200161109047671e-05
++bug_message_keyword_wrong,49,[1],0.0055,0.0045,0.003
++bugless_message_keyword_abil,50,[0],0.004,0.004,0.003
++bugless_message_keyword_ad,51,[0],0.0795,0.046,0.023
++bugless_message_keyword_add,52,[0],0.0895,0.0415,0.0195
++bugless_message_keyword_addit,53,[0],0.002,0.002,0.001
++bugless_message_keyword_allow,54,[0],0.0125,0.0115,0.007
++bugless_message_keyword_analysi,55,[0],0.003,0.003,0.0025
++bugless_message_keyword_avoid,56,[0],0.0055,0.0045,0.0035
++bugless_message_keyword_baselin,57,[],0.0,0.0,0.0
+ bugless_message_keyword_beautification,58,[],0.0,0.0,0.0
+-bugless_message_keyword_benchmark,59,[0],0.0007573089965414615,0.0005788349018151298,0.00032318282018011413
+-bugless_message_keyword_better,60,[0],0.006695190364328334,0.005532696936516282,0.0041241986754328
+-bugless_message_keyword_bump,61,[0],0.012459421261570668,0.010520324340489984,0.003733485116707587
++bugless_message_keyword_benchmark,59,[0],0.0005,0.0005,0.0
++bugless_message_keyword_better,60,[0],0.007,0.006,0.0035
++bugless_message_keyword_bump,61,[0],0.005,0.0045,0.001
+ bugless_message_keyword_chang|log,62,[],0.0,0.0,0.0
+-bugless_message_keyword_clean,63,[0],0.01370873992465499,0.008836879501044314,0.005836585259969225
+-bugless_message_keyword_comment,64,[0],0.009806427961584657,0.008629463661227226,0.005556815057425246
+-bugless_message_keyword_complet,65,[0],0.004317143642704509,0.00354536377361767,0.002546873567986571
++bugless_message_keyword_clean,63,[0],0.0125,0.006,0.0025
++bugless_message_keyword_comment,64,[0],0.0125,0.011,0.008
++bugless_message_keyword_complet,65,[0],0.004,0.004,0.0025
+ bugless_message_keyword_configur|chang,66,[],0.0,0.0,0.0
+-bugless_message_keyword_consolid,67,[0],0.00040518443127059086,0.00031835919599832135,0.00018329771890812443
+-bugless_message_keyword_convert,68,[0],0.0035164220285269134,0.0027494657836218666,0.0019487441694442703
+-bugless_message_keyword_coverag,69,[0],0.0019005079276263428,0.0016930920878092547,0.0010033138298128916
++bugless_message_keyword_consolid,67,[0],0.0005,0.0005,0.0005
++bugless_message_keyword_convert,68,[0],0.0045,0.0025,0.0015
++bugless_message_keyword_coverag,69,[0],0.0005,0.0,0.0
+ bugless_message_keyword_create,70,[],0.0,0.0,0.0
+-bugless_message_keyword_deprec,71,[0],0.0036128945121627685,0.003260769946891898,0.0021561600092613585
+-bugless_message_keyword_develop,72,[0],0.006989431439417692,0.00393125370816109,0.0019390969210806848
+-bugless_message_keyword_doc,73,[0],0.025039433127686157,0.022453970566245242,0.014012628248107933
+-bugless_message_keyword_drop,74,[0],0.003024412361984053,0.0024214593392599595,0.0016014432283551923
+-bugless_message_keyword_enhanc,75,[0],0.0017268574570818039,0.0014422636303560317,0.0009502539638131714
+-bugless_message_keyword_exampl,76,[0],0.0077805058052317026,0.00714378741323506,0.004408792502158572
+-bugless_message_keyword_exclud,77,[0],0.0014229691336288606,0.0012493186630843217,0.0008827232252680729
+-bugless_message_keyword_expand,78,[0],0.0015628542349008503,0.0013940273885381042,0.0010949626892669537
++bugless_message_keyword_deprec,71,[0],0.001,0.001,0.0005
++bugless_message_keyword_develop,72,[0],0.0075,0.0025,0.001
++bugless_message_keyword_doc,73,[0],0.0155,0.0125,0.0025
++bugless_message_keyword_drop,74,[0],0.0015,0.0015,0.0015
++bugless_message_keyword_enhanc,75,[0],0.001,0.001,0.001
++bugless_message_keyword_exampl,76,[0],0.007,0.006,0.001
++bugless_message_keyword_exclud,77,[0],0.0005,0.0005,0.0005
++bugless_message_keyword_expand,78,[0],0.001,0.001,0.001
+ bugless_message_keyword_extendgener,79,[],0.0,0.0,0.0
+-bugless_message_keyword_featur,80,[0],0.005542344184879868,0.00494903841051936,0.002985823368529711
+-bugless_message_keyword_forget,81,[0],0.00032318282018011413,0.0002604757058168084,0.00020741583981708818
+-bugless_message_keyword_format,82,[0],0.00782874204704963,0.0066517777466922,0.0048863312961560535
+-bugless_message_keyword_gitignor,83,[0],0.0011190808101759176,0.0009743720847221352,0.00039553718290700536
+-bugless_message_keyword_idea,84,[0],0.0008441342318137309,0.0007283672514507049,0.0004727151698156893
+-bugless_message_keyword_implement,85,[0],0.013414498849565632,0.010240554137946004,0.0067193084852372985
+-bugless_message_keyword_improv,86,[0],0.013014138042476834,0.010100669036674014,0.006955666070145143
+-bugless_message_keyword_includ,87,[0],0.00926618205322387,0.007997568893412377,0.005701523782879028
+-bugless_message_keyword_info,88,[0],0.004746446194884064,0.004239965655795826,0.002619227930713462
++bugless_message_keyword_featur,80,[0],0.005,0.005,0.003
++bugless_message_keyword_forget,81,[],0.0,0.0,0.0
++bugless_message_keyword_format,82,[0],0.0045,0.0035,0.0015
++bugless_message_keyword_gitignor,83,[0],0.0005,0.0005,0.0
++bugless_message_keyword_idea,84,[0],0.002,0.0015,0.0005
++bugless_message_keyword_implement,85,[0],0.0125,0.008,0.006
++bugless_message_keyword_improv,86,[0],0.014,0.011,0.008
++bugless_message_keyword_includ,87,[0],0.006,0.0055,0.0045
++bugless_message_keyword_info,88,[0],0.0065,0.0055,0.002
+ bugless_message_keyword_intorduc,89,[],0.0,0.0,0.0
+-bugless_message_keyword_limit,90,[0],0.002797702025439794,0.0024455774601689234,0.0018426244374448299
+-bugless_message_keyword_log,91,[0],0.011499520049393912,0.009796780713221072,0.007206494527598366
+-bugless_message_keyword_migrat,92,[0],0.0037913686068891,0.0029906469927115037,0.001987333162898612
+-bugless_message_keyword_minim,93,[0],0.000612600271087679,0.0005450695325425806,0.00033765369272549235
+-bugless_message_keyword_modif,94,[0],0.0012010824212663944,0.0008537814801773164,0.000612600271087679
+-bugless_message_keyword_move,95,[0],0.01651608919845837,0.011470578304303156,0.007500735602687723
+-bugless_message_keyword_new,96,[0],0.037214260562531055,0.0312619083221988,0.01382933052919981
+-bugless_message_keyword_note,97,[0],0.006810957344691361,0.0063189476781485,0.0036177181363445613
+-bugless_message_keyword_opinion,98,[0],5.7883490181512976e-05,5.305986599972023e-05,3.858899345434199e-05
+-bugless_message_keyword_optim,99,[0],0.0031739447116196284,0.002324986855624105,0.0015580306107190578
++bugless_message_keyword_limit,90,[0],0.002,0.0015,0.0015
++bugless_message_keyword_log,91,[0],0.004,0.0035,0.002
++bugless_message_keyword_migrat,92,[],0.0,0.0,0.0
++bugless_message_keyword_minim,93,[],0.0,0.0,0.0
++bugless_message_keyword_modif,94,[0],0.005,0.0035,0.002
++bugless_message_keyword_move,95,[0],0.0165,0.013,0.009
++bugless_message_keyword_new,96,[0],0.032,0.0255,0.013
++bugless_message_keyword_note,97,[0],0.003,0.003,0.0015
++bugless_message_keyword_opinion,98,[],0.0,0.0,0.0
++bugless_message_keyword_optim,99,[0],0.0025,0.002,0.001
+ bugless_message_keyword_pass|test,100,[],0.0,0.0,0.0
+ bugless_message_keyword_perf|test,101,[],0.0,0.0,0.0
+ bugless_message_keyword_perfom|test,102,[],0.0,0.0,0.0
+-bugless_message_keyword_perform,103,[0],0.002821820146348758,0.002643346051622426,0.001953567793626063
+-bugless_message_keyword_plugin,104,[0],0.005875174253423567,0.005185395995427204,0.0029231162541664053
+-bugless_message_keyword_polish,105,[0],0.0004534206730885183,0.00033765369272549235,0.00017847409472633168
+-bugless_message_keyword_possibl,106,[0],0.004920096665428603,0.004582442972703111,0.0037479559892529654
+-bugless_message_keyword_prepar,107,[0],0.00496833290724653,0.003241475450164727,0.0012396714147207362
+-bugless_message_keyword_propos,108,[0],0.000689778257996363,0.0006608365129056065,0.000535422284178995
+-bugless_message_keyword_provid,109,[0],0.0057787017697877125,0.0051275125052456915,0.0038781938421613696
+-bugless_message_keyword_publish,110,[0],0.004596913845248489,0.001722033832900011,0.0011431989310848813
+-bugless_message_keyword_readm,111,[0],0.009386772657768688,0.008277339095956356,0.0023394577281694827
+-bugless_message_keyword_reduc,112,[0],0.0022574561170790063,0.0018136826923540732,0.001283084032356871
+-bugless_message_keyword_refactor,113,[0],0.013240848379021094,0.00939159628195048,0.006261064187966987
+-bugless_message_keyword_refin,114,[0],0.0007187200030871195,0.000574011277633337,0.00038106631036162713
+-bugless_message_keyword_reformat,115,[0],0.0007573089965414615,0.0005788349018151298,0.0004775387939974821
++bugless_message_keyword_perform,103,[0],0.0045,0.0045,0.003
++bugless_message_keyword_plugin,104,[0],0.0035,0.0035,0.0
++bugless_message_keyword_polish,105,[0],0.0005,0.0005,0.0
++bugless_message_keyword_possibl,106,[0],0.0045,0.0045,0.0035
++bugless_message_keyword_prepar,107,[0],0.0085,0.0025,0.001
++bugless_message_keyword_propos,108,[],0.0,0.0,0.0
++bugless_message_keyword_provid,109,[0],0.004,0.003,0.0025
++bugless_message_keyword_publish,110,[0],0.005,0.0,0.0
++bugless_message_keyword_readm,111,[0],0.0115,0.0095,0.003
++bugless_message_keyword_reduc,112,[0],0.002,0.001,0.001
++bugless_message_keyword_refactor,113,[0],0.0085,0.0045,0.0025
++bugless_message_keyword_refin,114,[0],0.0025,0.001,0.001
++bugless_message_keyword_reformat,115,[0],0.0005,0.0,0.0
+ bugless_message_keyword_regress|test,116,[],0.0,0.0,0.0
+-bugless_message_keyword_reimplement,117,[0],0.00031353557181652863,0.0002315339607260519,0.0001495323496355752
++bugless_message_keyword_reimplement,117,[0],0.0005,0.0005,0.0005
+ bugless_message_keyword_release,118,[],0.0,0.0,0.0
+-bugless_message_keyword_remov,119,[0],0.052649857944267846,0.036654720157443095,0.025213083598230695
+-bugless_message_keyword_renam,120,[0],0.009820898834130036,0.005937881367786873,0.003767250485980136
+-bugless_message_keyword_reorgan,121,[0],0.0005257750358154096,0.00031835919599832135,0.00017847409472633168
+-bugless_message_keyword_replac,122,[0],0.008069923256139267,0.006338242174875671,0.004765740691611235
+-bugless_message_keyword_restrict,123,[0],0.0010467264474490264,0.0009502539638131714,0.0007910743658140107
+-bugless_message_keyword_restructur,124,[0],0.0006946018821781557,0.0005257750358154096,0.00041483167963417636
+-bugless_message_keyword_review,125,[0],0.0061018845899678265,0.005508578815607319,0.0034344204174364366
+-bugless_message_keyword_rewrit,126,[0],0.0014567345029014099,0.0011046099376305393,0.0008103688625411817
+-bugless_message_keyword_rid,127,[0],0.001302378529084042,0.0009599012121767568,0.0006174238952694718
++bugless_message_keyword_remov,119,[0],0.045,0.026,0.017
++bugless_message_keyword_renam,120,[0],0.009,0.004,0.0015
++bugless_message_keyword_reorgan,121,[0],0.0005,0.0,0.0
++bugless_message_keyword_replac,122,[0],0.0085,0.006,0.005
++bugless_message_keyword_restrict,123,[0],0.002,0.0015,0.0015
++bugless_message_keyword_restructur,124,[0],0.0015,0.001,0.001
++bugless_message_keyword_review,125,[0],0.0035,0.0035,0.0015
++bugless_message_keyword_rewrit,126,[0],0.0005,0.0,0.0
++bugless_message_keyword_rid,127,[0],0.001,0.001,0.0005
+ bugless_message_keyword_set|up,128,[],0.0,0.0,0.0
+-bugless_message_keyword_simplif,129,[0],0.00018329771890812443,0.0001495323496355752,9.647248363585496e-05
+-bugless_message_keyword_simplifi,130,[0],0.0033813605514367165,0.002455224708532509,0.0017895645714451095
+-bugless_message_keyword_speedup,131,[0],0.00011094335618123321,0.00010129610781764771,7.235436272689123e-05
+-bugless_message_keyword_stage,132,[0],0.0010515500716308192,0.0008923704736316584,0.000670483761269192
+-bugless_message_keyword_stat,133,[0],0.0015483833623554722,0.0010660209441761973,0.000612600271087679
+-bugless_message_keyword_statist,134,[0],0.000496833290724653,0.00044377342472493286,0.00029424107508935763
+-bugless_message_keyword_support,135,[0],0.023563404128057575,0.02057275713534607,0.012030118709391115
+-bugless_message_keyword_switch,136,[0],0.005397635459426085,0.004264083776704789,0.003178768335801421
+-bugless_message_keyword_test,137,[0],0.05603604211988635,0.04840989228847202,0.03266558295910049
++bugless_message_keyword_simplif,129,[],0.0,0.0,0.0
++bugless_message_keyword_simplifi,130,[0],0.002,0.002,0.0015
++bugless_message_keyword_speed|up,131,[],0.0,0.0,0.0
++bugless_message_keyword_stage,132,[0],0.004,0.0025,0.0025
++bugless_message_keyword_stat,133,[0],0.0005,0.0005,0.0
++bugless_message_keyword_statist,134,[],0.0,0.0,0.0
++bugless_message_keyword_support,135,[0],0.0185,0.013,0.0065
++bugless_message_keyword_switch,136,[0],0.0035,0.003,0.0015
++bugless_message_keyword_test,137,[0],0.0395,0.0305,0.017
+ bugless_message_keyword_test|coverag,138,[],0.0,0.0,0.0
+ bugless_message_keyword_test|pass,139,[],0.0,0.0,0.0
+-bugless_message_keyword_todo,140,[0],0.0019439205452624776,0.0016786212152638763,0.0007669562449050469
+-bugless_message_keyword_tweak,141,[0],0.0031739447116196284,0.0020596875256255033,0.0012782604081750782
+-bugless_message_keyword_unit,142,[0],0.005204690492154375,0.00502139277324625,0.00335241880634596
+-bugless_message_keyword_unnecessari,143,[0],0.003135355718165286,0.0030678249796201877,0.0019487441694442703
+-bugless_message_keyword_updat,144,[0],0.11775431352592457,0.055809331783342096,0.0296652887180254
+-bugless_message_keyword_upgrad,145,[0],0.005561638681607039,0.003849252097070613,0.0024407538359871306
+-bugless_message_keyword_version,146,[0],0.037257673180167185,0.03230381114546604,0.010973745013578503
+-bug_issue_body_keyword_bad,147,[1],0.0032077100808921774,0.003198062832528592,0.0031546502148924573
+-bug_issue_body_keyword_broken,148,[1],0.0060005884821501786,0.005995764857968386,0.005894468750150738
+-bug_issue_body_keyword_bug,149,[1],0.04434840072740252,0.044295340861402806,0.04366344609358796
+-bug_issue_body_keyword_close,150,[1],0.018054825312450257,0.01779434960663345,0.01728786906754521
+-bug_issue_body_keyword_concurr,151,[1],0.0005257750358154096,0.0005257750358154096,0.0005113041632700313
+-bug_issue_body_keyword_correct,152,[1],0.01853236410644774,0.018508245985538775,0.018247770279721968
+-bug_issue_body_keyword_corrupt,153,[1],0.000574011277633337,0.000574011277633337,0.000554716780906166
+-bug_issue_body_keyword_crash,154,[1],0.006405772913420769,0.00637200754414822,0.006241769691239816
+-bug_issue_body_keyword_deadlock,155,[1],0.0002701229541803939,0.0002701229541803939,0.0002556520816350156
+-bug_issue_body_keyword_defect,156,[1],0.0002556520816350156,0.0002556520816350156,0.0002556520816350156
+-bug_issue_body_keyword_disabl,157,[1],0.00621282794614906,0.006208004321967267,0.0061018845899678265
+-bug_issue_body_keyword_endless,158,[1],0.00016882684636274618,0.00016882684636274618,0.00016400322218095343
+-bug_issue_body_keyword_ensur,159,[1],0.006622836001601443,0.006608365129056065,0.006540834390510966
+-bug_issue_body_keyword_error,160,[1],0.052799390293903424,0.05270774143444936,0.05156936612754627
+-bug_issue_body_keyword_except,161,[1],0.01688268463627462,0.016858566515365655,0.016593267185367053
+-bug_issue_body_keyword_fail,162,[1],0.028686093009121474,0.02866197488821251,0.02822302508766937
+-bug_issue_body_keyword_fix,163,[1],0.06382619517348165,0.06317018228475783,0.060985080530405716
+-bug_issue_body_keyword_garbag,164,[1],0.0004920096665428604,0.0004920096665428604,0.0004727151698156893
+-bug_issue_body_keyword_handl,165,[1],0.010018667425583537,0.009999372928856366,0.00981125158576645
+-bug_issue_body_keyword_incomplet,166,[1],0.0007187200030871195,0.0007187200030871195,0.0007138963789053267
+-bug_issue_body_keyword_inconsist,167,[1],0.0013699092676291405,0.0013650856434473477,0.0013554383950837622
+-bug_issue_body_keyword_incorrect,168,[1],0.003294535316164447,0.0032848880678008614,0.0032318282018011413
+-bug_issue_body_keyword_infinit,169,[1],0.0007187200030871195,0.0007187200030871195,0.0007090727547235339
+-bug_issue_body_keyword_invalid,170,[1],0.00675789747869164,0.006743426606146262,0.006685543115964749
++bugless_message_keyword_todo,140,[0],0.0055,0.0045,0.002
++bugless_message_keyword_tweak,141,[0],0.0025,0.001,0.001
++bugless_message_keyword_unit,142,[0],0.0045,0.004,0.003
++bugless_message_keyword_unnecessari,143,[0],0.0055,0.0055,0.0025
++bugless_message_keyword_updat,144,[0],0.1515,0.04,0.0185
++bugless_message_keyword_upgrad,145,[0],0.004,0.0015,0.0005
++bugless_message_keyword_version,146,[0],0.0215,0.015,0.005
++bug_issue_body_keyword_bad,147,[1],0.002,0.002,0.0015
++bug_issue_body_keyword_broken,148,[1],0.0005,0.0005,0.0005
++bug_issue_body_keyword_bug,149,[1],0.014,0.014,0.012
++bug_issue_body_keyword_close,150,[1],0.0095,0.009,0.008
++bug_issue_body_keyword_concurr,151,[1],0.0005,0.0005,0.0005
++bug_issue_body_keyword_correct,152,[1],0.0085,0.0085,0.0075
++bug_issue_body_keyword_corrupt,153,[1],0.0005,0.0005,0.0005
++bug_issue_body_keyword_crash,154,[1],0.006,0.006,0.005
++bug_issue_body_keyword_dead|lock,155,[],0.0,0.0,0.0
++bug_issue_body_keyword_defect,156,[],0.0,0.0,0.0
++bug_issue_body_keyword_disabl,157,[1],0.0025,0.0025,0.0015
++bug_issue_body_keyword_endless,158,[],0.0,0.0,0.0
++bug_issue_body_keyword_ensur,159,[1],0.0005,0.0005,0.0005
++bug_issue_body_keyword_error,160,[1],0.0235,0.0235,0.0195
++bug_issue_body_keyword_except,161,[1],0.0065,0.0065,0.005
++bug_issue_body_keyword_fail,162,[1],0.015,0.015,0.0125
++bug_issue_body_keyword_fix,163,[1],0.029,0.029,0.021
++bug_issue_body_keyword_garbag,164,[1],0.0005,0.0005,0.0005
++bug_issue_body_keyword_handl,165,[1],0.004,0.004,0.0035
++bug_issue_body_keyword_incomplet,166,[1],0.0015,0.0015,0.0015
++bug_issue_body_keyword_inconsist,167,[1],0.002,0.002,0.002
++bug_issue_body_keyword_incorrect,168,[1],0.0015,0.0015,0.0015
++bug_issue_body_keyword_infinit,169,[],0.0,0.0,0.0
++bug_issue_body_keyword_invalid,170,[1],0.003,0.003,0.002
+ bug_issue_body_keyword_issue,171,[],0.0,0.0,0.0
+-bug_issue_body_keyword_leak,172,[1],0.001148022555266674,0.001148022555266674,0.0011431989310848813
+-bug_issue_body_keyword_loop,173,[1],0.0024648719568960945,0.0024648719568960945,0.002397341218350996
+-bug_issue_body_keyword_minor,174,[1],0.0031160612214381155,0.00310641397307453,0.003082295852165566
+-bug_issue_body_keyword_mistak,175,[1],0.0007524853723596687,0.0007476617481778759,0.0007235436272689123
+-bug_issue_body_keyword_npe,176,[1],0.0011721406761756377,0.0011721406761756377,0.001148022555266674
++bug_issue_body_keyword_leak,172,[1],0.001,0.001,0.001
++bug_issue_body_keyword_loop,173,[1],0.0025,0.0025,0.0025
++bug_issue_body_keyword_minor,174,[1],0.002,0.002,0.002
++bug_issue_body_keyword_mistak,175,[],0.0,0.0,0.0
++bug_issue_body_keyword_npe,176,[],0.0,0.0,0.0
+ bug_issue_body_keyword_not|work,177,[],0.0,0.0,0.0
+ bug_issue_body_keyword_not|return,178,[],0.0,0.0,0.0
+ bug_issue_body_keyword_of|bound,179,[],0.0,0.0,0.0
+-bug_issue_body_keyword_patch,180,[1],0.004920096665428603,0.004900802168701432,0.004833271430156333
+-bug_issue_body_keyword_prevent,181,[1],0.005243279485608717,0.005233632237245132,0.005088923511791349
+-bug_issue_body_keyword_problem,182,[1],0.027552541326400178,0.027499481460400457,0.02715700414349317
+-bug_issue_body_keyword_properli,183,[1],0.005629169420152137,0.005614698547606759,0.005523049688152697
++bug_issue_body_keyword_patch,180,[],0.0,0.0,0.0
++bug_issue_body_keyword_prevent,181,[1],0.0015,0.0015,0.0015
++bug_issue_body_keyword_problem,182,[1],0.0205,0.0205,0.0185
++bug_issue_body_keyword_properli,183,[1],0.003,0.003,0.0025
+ bug_issue_body_keyword_race|condit,184,[],0.0,0.0,0.0
+-bug_issue_body_keyword_repair,185,[1],0.00015917959799916068,0.00015917959799916068,0.00015917959799916068
+-bug_issue_body_keyword_resolv,186,[1],0.015459715502645757,0.015372890267373488,0.01505935469555696
+-bug_issue_body_keyword_threw,187,[1],0.007298143387052428,0.007298143387052428,0.007177552782507609
+-bug_issue_body_keyword_timeout,188,[1],0.0019825095387168193,0.0019825095387168193,0.0019632150419896487
+-bug_issue_body_keyword_unabl,189,[1],0.0035694818945266335,0.0035694818945266335,0.0035164220285269134
+-bug_issue_body_keyword_unclos,190,[1],0.00010129610781764771,0.00010129610781764771,9.647248363585496e-05
+-bug_issue_body_keyword_unexpect,191,[1],0.002792878401258001,0.002792878401258001,0.002744642159440074
+-bug_issue_body_keyword_unknown,192,[1],0.004842918678519919,0.004842918678519919,0.004770564315793028
++bug_issue_body_keyword_repair,185,[],0.0,0.0,0.0
++bug_issue_body_keyword_resolv,186,[1],0.0095,0.0095,0.0085
++bug_issue_body_keyword_threw,187,[1],0.0015,0.0015,0.0005
++bug_issue_body_keyword_timeout,188,[1],0.001,0.001,0.001
++bug_issue_body_keyword_unabl,189,[1],0.002,0.002,0.002
++bug_issue_body_keyword_unclos,190,[],0.0,0.0,0.0
++bug_issue_body_keyword_unexpect,191,[1],0.001,0.001,0.001
++bug_issue_body_keyword_unknown,192,[1],0.0005,0.0005,0.0005
+ bug_issue_body_keyword_unsynchron,193,[],0.0,0.0,0.0
+-bug_issue_body_keyword_wrong,194,[1],0.008026510638503133,0.008012039765957754,0.007867331040503972
+-bug_issue_label_keyword_bug,195,[1],0.19998745857712732,0.19998745857712732,0.19998745857712732
++bug_issue_body_keyword_wrong,194,[1],0.007,0.007,0.0065
++bug_issue_label_keyword_bug,195,[1],0.1165,0.1135,0.0835
+ bug_issue_label_keyword_fixed,196,[],0.0,0.0,0.0
+-bug_issue_label_keyword_fix,197,[1],0.0055905804266977955,0.0055905804266977955,0.0055905804266977955
+-bug_issue_label_keyword_error,198,[1],1.9294496727170994e-05,1.9294496727170994e-05,1.9294496727170994e-05
+-bugless_issue_body_keyword_abil,199,[0],0.002324986855624105,0.0022333379961700425,0.002011451283807576
+-bugless_issue_body_keyword_ad,200,[0],0.028208554215123992,0.028107258107306344,0.026496167630587566
+-bugless_issue_body_keyword_add,201,[0],0.037696622980710325,0.03750850163762041,0.035077395049996865
+-bugless_issue_body_keyword_addit,202,[0],0.013400027977020255,0.013390380728656668,0.013062374284294761
+-bugless_issue_body_keyword_allow,203,[0],0.012932136431386358,0.012874252941204844,0.011972235219209601
+-bugless_issue_body_keyword_analysi,204,[0],0.0014663817512649954,0.0014663817512649954,0.0014181455094470679
+-bugless_issue_body_keyword_avoid,205,[0],0.006097060965786034,0.00607294284487707,0.005855879756696396
+-bugless_issue_body_keyword_baselin,206,[0],0.00019776859145350268,0.00019294496727170993,0.00018812134308991718
++bug_issue_label_keyword_fix,197,[],0.0,0.0,0.0
++bug_issue_label_keyword_error,198,[],0.0,0.0,0.0
++bugless_issue_body_keyword_abil,199,[0],0.003,0.003,0.003
++bugless_issue_body_keyword_ad,200,[0],0.0125,0.0125,0.0105
++bugless_issue_body_keyword_add,201,[0],0.008,0.008,0.0065
++bugless_issue_body_keyword_addit,202,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_allow,203,[0],0.0065,0.0065,0.0065
++bugless_issue_body_keyword_analysi,204,[0],0.002,0.002,0.002
++bugless_issue_body_keyword_avoid,205,[0],0.0025,0.0025,0.0025
++bugless_issue_body_keyword_baselin,206,[],0.0,0.0,0.0
+ bugless_issue_body_keyword_beautification,207,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_benchmark,208,[0],0.0005836585259969225,0.0005836585259969225,0.000535422284178995
+-bugless_issue_body_keyword_better,209,[0],0.005653287541061101,0.0056243457959703445,0.0053879882110625
+-bugless_issue_body_keyword_bump,210,[0],0.002199572626897493,0.002199572626897493,0.0020403930288983327
++bugless_issue_body_keyword_benchmark,208,[],0.0,0.0,0.0
++bugless_issue_body_keyword_better,209,[],0.0,0.0,0.0
++bugless_issue_body_keyword_bump,210,[0],0.0005,0.0005,0.0005
+ bugless_issue_body_keyword_chang|log,211,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_clean,212,[0],0.00496833290724653,0.004944214786337567,0.004707857201429722
+-bugless_issue_body_keyword_comment,213,[0],0.010587855079035082,0.010558913333944325,0.01023090688958242
+-bugless_issue_body_keyword_complet,214,[0],0.01019714152030987,0.01016337615103732,0.00993666581449306
++bugless_issue_body_keyword_clean,212,[0],0.0045,0.0045,0.0045
++bugless_issue_body_keyword_comment,213,[0],0.0035,0.0035,0.0035
++bugless_issue_body_keyword_complet,214,[0],0.007,0.007,0.0065
+ bugless_issue_body_keyword_configur|chang,215,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_consolid,216,[0],0.0002411812090896374,0.00020259221563529543,0.00018329771890812443
+-bugless_issue_body_keyword_convert,217,[0],0.0035164220285269134,0.0035164220285269134,0.0034199495448910583
+-bugless_issue_body_keyword_coverag,218,[0],0.002112747391625224,0.002112747391625224,0.0019680386661714414
++bugless_issue_body_keyword_consolid,216,[],0.0,0.0,0.0
++bugless_issue_body_keyword_convert,217,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_coverag,218,[],0.0,0.0,0.0
+ bugless_issue_body_keyword_create,219,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_deprec,220,[0],0.003424773169072851,0.0034199495448910583,0.003048530482893017
+-bugless_issue_body_keyword_develop,221,[0],0.008668052654681568,0.008610169164500055,0.008286986344319942
+-bugless_issue_body_keyword_doc,222,[0],0.02778407528712623,0.0277358390453083,0.02636592977767916
+-bugless_issue_body_keyword_drop,223,[0],0.003024412361984053,0.0030195887378022604,0.002932763502529991
+-bugless_issue_body_keyword_enhanc,224,[0],0.010481735347035642,0.010476911722853848,0.010370791990854408
+-bugless_issue_body_keyword_exampl,225,[0],0.028213377839305782,0.02816996522166965,0.02709912065331166
+-bugless_issue_body_keyword_exclud,226,[0],0.0012637895356297,0.0012541422872661145,0.001186611548721016
+-bugless_issue_body_keyword_expand,227,[0],0.0019005079276263428,0.0018860370550809644,0.0017943881956269023
++bugless_issue_body_keyword_deprec,220,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_develop,221,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_doc,222,[0],0.0035,0.0035,0.003
++bugless_issue_body_keyword_drop,223,[0],0.002,0.002,0.002
++bugless_issue_body_keyword_enhanc,224,[],0.0,0.0,0.0
++bugless_issue_body_keyword_exampl,225,[0],0.0085,0.0085,0.0085
++bugless_issue_body_keyword_exclud,226,[0],0.0025,0.0025,0.0025
++bugless_issue_body_keyword_expand,227,[0],0.0005,0.0005,0.0005
+ bugless_issue_body_keyword_extendgener,228,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_featur,229,[0],0.019545325184624214,0.01952120706371525,0.01897131390699088
+-bugless_issue_body_keyword_forget,230,[0],0.000496833290724653,0.000496833290724653,0.00044377342472493286
+-bugless_issue_body_keyword_format,231,[0],0.010973745013578503,0.010939979644305953,0.010616796824125838
+-bugless_issue_body_keyword_gitignor,232,[0],8.200161109047671e-05,8.200161109047671e-05,6.753073854509848e-05
+-bugless_issue_body_keyword_idea,233,[0],0.006077766469058863,0.0060681192206952774,0.00587999787760536
+-bugless_issue_body_keyword_implement,234,[0],0.013896861267744908,0.013781094287381881,0.01275848596084182
+-bugless_issue_body_keyword_improv,235,[0],0.005344575593426365,0.005325281096699194,0.004982803779791909
+-bugless_issue_body_keyword_includ,236,[0],0.01996980411262198,0.019911920622440463,0.01918355337098976
+-bugless_issue_body_keyword_info,237,[0],0.01231953616029868,0.012314712536116885,0.012097649447936213
++bugless_issue_body_keyword_featur,229,[0],0.0025,0.0025,0.0025
++bugless_issue_body_keyword_forget,230,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_format,231,[0],0.0015,0.0015,0.001
++bugless_issue_body_keyword_gitignor,232,[],0.0,0.0,0.0
++bugless_issue_body_keyword_idea,233,[0],0.002,0.002,0.002
++bugless_issue_body_keyword_implement,234,[0],0.009,0.009,0.007
++bugless_issue_body_keyword_improv,235,[0],0.0035,0.0035,0.0035
++bugless_issue_body_keyword_includ,236,[0],0.01,0.01,0.0095
++bugless_issue_body_keyword_info,237,[0],0.0035,0.0035,0.0035
+ bugless_issue_body_keyword_intorduc,238,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_limit,239,[0],0.005421753580335049,0.005402459083607878,0.005141983377791069
+-bugless_issue_body_keyword_log,240,[0],0.01607713939791523,0.016053021277006266,0.015671954966644638
+-bugless_issue_body_keyword_migrat,241,[0],0.00510821800851852,0.00510821800851852,0.00491527304124681
+-bugless_issue_body_keyword_minim,242,[0],0.006555305263056345,0.006555305263056345,0.006497421772874832
+-bugless_issue_body_keyword_modif,243,[0],0.0013843801401745186,0.0013843801401745186,0.0013554383950837622
+-bugless_issue_body_keyword_move,244,[0],0.008378635203774003,0.008340046210319661,0.007756387684322739
+-bugless_issue_body_keyword_new,245,[0],0.045896784089757996,0.0458292533512129,0.04366344609358796
+-bugless_issue_body_keyword_note,246,[0],0.014060864489925861,0.014046393617380483,0.013366262607747705
+-bugless_issue_body_keyword_opinion,247,[0],0.0004293025521795546,0.0004293025521795546,0.0004100080554523836
+-bugless_issue_body_keyword_optim,248,[0],0.0023153396072605192,0.0023153396072605192,0.002242985244533628
++bugless_issue_body_keyword_limit,239,[0],0.0015,0.0015,0.0015
++bugless_issue_body_keyword_log,240,[0],0.0025,0.0025,0.0025
++bugless_issue_body_keyword_migrat,241,[],0.0,0.0,0.0
++bugless_issue_body_keyword_minim,242,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_modif,243,[],0.0,0.0,0.0
++bugless_issue_body_keyword_move,244,[0],0.005,0.005,0.004
++bugless_issue_body_keyword_new,245,[0],0.015,0.015,0.014
++bugless_issue_body_keyword_note,246,[0],0.0045,0.0045,0.0045
++bugless_issue_body_keyword_opinion,247,[],0.0,0.0,0.0
++bugless_issue_body_keyword_optim,248,[0],0.0025,0.0025,0.002
+ bugless_issue_body_keyword_pass|test,249,[],0.0,0.0,0.0
+ bugless_issue_body_keyword_perf|test,250,[],0.0,0.0,0.0
+ bugless_issue_body_keyword_perfom|test,251,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_perform,252,[0],0.006347889423239257,0.006347889423239257,0.006150120831785754
+-bugless_issue_body_keyword_plugin,253,[0],0.008557109298500336,0.00854746205013675,0.0081808666123205
+-bugless_issue_body_keyword_polish,254,[0],0.00017365047054453893,0.00017365047054453893,0.00015917959799916068
+-bugless_issue_body_keyword_possibl,255,[0],0.015946901545006824,0.015913136175734276,0.015430773757555001
+-bugless_issue_body_keyword_prepar,256,[0],0.001437440006174239,0.0014326163819924462,0.0013506147709019694
+-bugless_issue_body_keyword_propos,257,[0],0.005373517338517122,0.005359046465971743,0.00502139277324625
+-bugless_issue_body_keyword_provid,258,[0],0.016675268796457532,0.016646327051366774,0.015585129731372369
+-bugless_issue_body_keyword_publish,259,[0],0.003193239208346799,0.0031884155841650067,0.0030195887378022604
+-bugless_issue_body_keyword_readm,260,[0],0.0030774722279837733,0.0030726486038019805,0.002898998133257442
+-bugless_issue_body_keyword_reduc,261,[0],0.0018860370550809644,0.0018715661825355863,0.0017895645714451095
+-bugless_issue_body_keyword_refactor,262,[0],0.007274025266143464,0.007264378017779878,0.00705696217796279
+-bugless_issue_body_keyword_refin,263,[0],0.0005691876534515443,0.0005691876534515443,0.0005402459083607878
+-bugless_issue_body_keyword_reformat,264,[0],0.00020259221563529543,0.00020259221563529543,0.00019294496727170993
++bugless_issue_body_keyword_perform,252,[0],0.0035,0.0035,0.0015
++bugless_issue_body_keyword_plugin,253,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_polish,254,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_possibl,255,[0],0.0075,0.007,0.007
++bugless_issue_body_keyword_prepar,256,[0],0.0005,0.0005,0.0
++bugless_issue_body_keyword_propos,257,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_provid,258,[0],0.008,0.008,0.007
++bugless_issue_body_keyword_publish,259,[0],0.0025,0.0025,0.0025
++bugless_issue_body_keyword_readm,260,[],0.0,0.0,0.0
++bugless_issue_body_keyword_reduc,261,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_refactor,262,[0],0.0015,0.0015,0.001
++bugless_issue_body_keyword_refin,263,[],0.0,0.0,0.0
++bugless_issue_body_keyword_reformat,264,[],0.0,0.0,0.0
+ bugless_issue_body_keyword_regress|test,265,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_reimplement,266,[0],0.00023635758490784465,0.00022671033654425915,0.00010611973199944046
++bugless_issue_body_keyword_reimplement,266,[0],0.0005,0.0005,0.0005
+ bugless_issue_body_keyword_release,267,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_remov,268,[0],0.025227554470776074,0.025131081987140216,0.023582698624784747
+-bugless_issue_body_keyword_renam,269,[0],0.002247808868715421,0.002242985244533628,0.0020838056465344672
+-bugless_issue_body_keyword_reorgan,270,[0],7.235436272689123e-05,7.235436272689123e-05,5.7883490181512976e-05
+-bugless_issue_body_keyword_replac,271,[0],0.007167905534144024,0.007114845668144304,0.00675789747869164
+-bugless_issue_body_keyword_restrict,272,[0],0.001398851012719897,0.001398851012719897,0.0013313202741747985
+-bugless_issue_body_keyword_restructur,273,[0],0.00036177181363445613,0.00036177181363445613,0.00035694818945266335
+-bugless_issue_body_keyword_review,274,[0],0.008190513860684086,0.008103688625411817,0.007659915200686884
+-bugless_issue_body_keyword_rewrit,275,[0],0.0008827232252680729,0.0008730759769044874,0.0008248397350865599
+-bugless_issue_body_keyword_rid,276,[0],0.0009743720847221352,0.0009743720847221352,0.0009213122187224149
++bugless_issue_body_keyword_remov,268,[0],0.0085,0.0085,0.0085
++bugless_issue_body_keyword_renam,269,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_reorgan,270,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_replac,271,[0],0.005,0.005,0.005
++bugless_issue_body_keyword_restrict,272,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_restructur,273,[],0.0,0.0,0.0
++bugless_issue_body_keyword_review,274,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_rewrit,275,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_rid,276,[0],0.0015,0.0015,0.0015
+ bugless_issue_body_keyword_set|up,277,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_simplif,278,[0],8.682523527226946e-05,8.682523527226946e-05,7.717798690868398e-05
+-bugless_issue_body_keyword_simplifi,279,[0],0.0014712053754467882,0.0014567345029014099,0.0013650856434473477
+-bugless_issue_body_keyword_speedup,280,[0],3.858899345434199e-05,3.858899345434199e-05,3.858899345434199e-05
+-bugless_issue_body_keyword_stage,281,[0],0.0012348477905389436,0.0012300241663571508,0.0011914351729028088
+-bugless_issue_body_keyword_stat,282,[0],0.0009695484605403424,0.0009695484605403424,0.0009454303396313786
+-bugless_issue_body_keyword_statist,283,[0],0.00040518443127059086,0.0004003608070887981,0.00036177181363445613
+-bugless_issue_body_keyword_support,284,[0],0.016979157119910472,0.016858566515365655,0.015421126509191417
+-bugless_issue_body_keyword_switch,285,[0],0.005286692103244852,0.0052818684790630595,0.0050551581425188
+-bugless_issue_body_keyword_test,286,[0],0.05055640504936979,0.05045510894155215,0.04823624181792748
++bugless_issue_body_keyword_simplif,278,[],0.0,0.0,0.0
++bugless_issue_body_keyword_simplifi,279,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_speed|up,280,[],0.0,0.0,0.0
++bugless_issue_body_keyword_stage,281,[0],0.001,0.001,0.001
++bugless_issue_body_keyword_stat,282,[],0.0,0.0,0.0
++bugless_issue_body_keyword_statist,283,[],0.0,0.0,0.0
++bugless_issue_body_keyword_support,284,[0],0.0015,0.0015,0.001
++bugless_issue_body_keyword_switch,285,[0],0.004,0.004,0.004
++bugless_issue_body_keyword_test,286,[0],0.0105,0.0105,0.0095
+ bugless_issue_body_keyword_test|coverag,287,[],0.0,0.0,0.0
+ bugless_issue_body_keyword_test|pass,288,[],0.0,0.0,0.0
+-bugless_issue_body_keyword_todo,289,[0],0.0023298104798058976,0.002320163231442312,0.0021609836334431512
+-bugless_issue_body_keyword_tweak,290,[0],0.0005595404050879588,0.0005595404050879588,0.0005209514116336168
+-bugless_issue_body_keyword_unit,291,[0],0.006946018821781558,0.006946018821781558,0.006690366740146542
+-bugless_issue_body_keyword_unnecessari,292,[0],0.0011576698036302596,0.0011576698036302596,0.0010804918167215756
+-bugless_issue_body_keyword_updat,293,[0],0.03426220256327389,0.03412714108618369,0.03216392604419405
+-bugless_issue_body_keyword_upgrad,294,[0],0.0058269380116056394,0.005817290763242054,0.005455518949607598
+-bugless_issue_body_keyword_version,295,[0],0.05591062789115974,0.055741801044797,0.05401976721189699
+-bugless_issue_label_keyword_bug,296,[0],0.19998745857712732,0.19998745857712732,0.19998745857712732
+-bugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0
+-bugless_issue_label_keyword_fix,298,[0],0.0055905804266977955,0.0055905804266977955,0.0055905804266977955
+-bugless_issue_label_keyword_error,299,[0],1.9294496727170994e-05,1.9294496727170994e-05,1.9294496727170994e-05
++bugless_issue_body_keyword_todo,289,[],0.0,0.0,0.0
++bugless_issue_body_keyword_tweak,290,[],0.0,0.0,0.0
++bugless_issue_body_keyword_unit,291,[0],0.0015,0.0015,0.0015
++bugless_issue_body_keyword_unnecessari,292,[0],0.0005,0.0005,0.0005
++bugless_issue_body_keyword_updat,293,[0],0.016,0.016,0.0155
++bugless_issue_body_keyword_upgrad,294,[0],0.0025,0.0025,0.002
++bugless_issue_body_keyword_version,295,[0],0.016,0.016,0.0155
++bugless_issue_label_keyword_enhancement,296,[],0.0,0.0,0.0
++bugless_issue_label_keyword_feature,297,[],0.0,0.0,0.0
++bugless_issue_label_keyword_request,298,[],0.0,0.0,0.0
++bugless_issue_label_keyword_refactor,299,[],0.0,0.0,0.0
++bugless_issue_label_keyword_renovate,300,[],0.0,0.0,0.0
++bugless_issue_label_keyword_new,301,[],0.0,0.0,0.0
+Index: ../bohr/generated/message_issues/analysis_herzig.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>,j,Polarity,Coverage,Overlaps,Conflicts,Correct,Incorrect,Emp. Acc.\ngithub_ref_in_message,0,[],0.0,0.0,0.0,0,0,0.0\nversion_in_message,1,[0],0.0005753739930955121,0.0005753739930955121,0.0003835826620636747,2,1,0.6666666666666666\nbug_message_keyword_bad,2,[1],0.0038358266206367474,0.003260452627541235,0.0015343306482546988,17,3,0.85\nbug_message_keyword_broken,3,[1],0.004219409282700422,0.0034522439585730723,0.002109704641350211,18,4,0.8181818181818181\nbug_message_keyword_bug,4,[1],0.10203298810893748,0.09934790947449175,0.04948216340621404,456,76,0.8571428571428572\nbug_message_keyword_close,5,[1],0.01380897583429229,0.009205983889528193,0.004411200613732259,59,13,0.8194444444444444\nbug_message_keyword_concurr,6,[1],0.008438818565400843,0.00805523590333717,0.006137322593018795,32,12,0.7272727272727273\nbug_message_keyword_correct,7,[1],0.01726121979286536,0.014384349827387802,0.008822401227464518,69,21,0.7666666666666666\nbug_message_keyword_corrupt,8,[1],0.005178365937859608,0.004219409282700422,0.002493287303413886,25,2,0.9259259259259259\nbug_message_keyword_crash,9,[1],0.0009589566551591868,0.0007671653241273494,0.0005753739930955121,4,1,0.8\nbug_message_keyword_deadlock,10,[1],0.0055619485999232835,0.004602991944764097,0.0034522439585730723,29,0,1.0\nbug_message_keyword_defect,11,[1],0.00019179133103183735,0.00019179133103183735,0.0,1,0,1.0\nbug_message_keyword_disabl,12,[1],0.0055619485999232835,0.004411200613732259,0.0038358266206367474,16,13,0.5517241379310345\nbug_message_keyword_endless,13,[1],0.0009589566551591868,0.0009589566551591868,0.00019179133103183735,5,0,1.0\nbug_message_keyword_ensur,14,[1],0.0030686612965093976,0.002493287303413886,0.0011507479861910242,13,3,0.8125\nbug_message_keyword_error,15,[1],0.01726121979286536,0.01534330648254699,0.011123897199846567,61,29,0.6777777777777778\nbug_message_keyword_except,16,[1],0.02896049098580744,0.02474108170310702,0.01457614115841964,105,46,0.695364238410596\nbug_message_keyword_fail,17,[1],0.04449558879938627,0.029344073647871116,0.02090525508247027,200,32,0.8620689655172413\nbug_message_keyword_fix,18,[1],0.2213271960107403,0.1751054852320675,0.09877253548139624,980,174,0.8492201039861351\nbug_message_keyword_garbag,19,[1],0.003260452627541235,0.002493287303413886,0.0015343306482546988,13,4,0.7647058823529411\nbug_message_keyword_handl,20,[1],0.02032988108937476,0.017644802454929037,0.010740314537782892,68,38,0.6415094339622641\nbug_message_keyword_incomplet,21,[1],0.0015343306482546988,0.0015343306482546988,0.0011507479861910242,5,3,0.625\nbug_message_keyword_inconsist,22,[1],0.004602991944764097,0.0034522439585730723,0.002109704641350211,20,4,0.8333333333333333\nbug_message_keyword_incorrect,23,[1],0.009014192558496356,0.005370157268891446,0.002685078634445723,43,4,0.9148936170212766\nbug_message_keyword_infinit,24,[1],0.002493287303413886,0.0023014959723820483,0.0005753739930955121,12,1,0.9230769230769231\nbug_message_keyword_invalid,25,[1],0.006712696586114308,0.004986574606827772,0.002685078634445723,31,4,0.8857142857142857\nbug_message_keyword_issue,26,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_leak,27,[1],0.00364403528960491,0.002493287303413886,0.0013425393172228615,19,0,1.0\nbug_message_keyword_loop,28,[1],0.006137322593018795,0.0055619485999232835,0.0019179133103183737,27,5,0.84375\nbug_message_keyword_minor,29,[1],0.007863444572305332,0.007863444572305332,0.00728807057920982,19,22,0.4634146341463415\nbug_message_keyword_mistak,30,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_npe,31,[1],0.012466436517069428,0.009973149213655544,0.0034522439585730723,60,5,0.9230769230769231\nbug_message_keyword_not|work,32,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_not|return,33,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_of|bound,34,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_patch,35,[1],0.07077100115074798,0.05811277330264672,0.043153049482163405,211,158,0.5718157181571816\nbug_message_keyword_prevent,36,[1],0.009397775220560031,0.007479861910241657,0.002685078634445723,39,10,0.7959183673469388\nbug_message_keyword_problem,37,[1],0.011891062523973917,0.01016494054468738,0.00652090525508247,58,4,0.935483870967742\nbug_message_keyword_properli,38,[1],0.008822401227464518,0.006904487917146145,0.004602991944764097,38,8,0.8260869565217391\nbug_message_keyword_race|condit,39,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_repair,40,[],0.0,0.0,0.0,0,0,0.0\nbug_message_keyword_resolv,41,[1],0.006712696586114308,0.005945531261986959,0.004027617951668585,17,18,0.4857142857142857\nbug_message_keyword_threw,42,[1],0.025891829689298044,0.018411967779056387,0.008822401227464518,111,24,0.8222222222222222\nbug_message_keyword_timeout,43,[1],0.003260452627541235,0.0030686612965093976,0.0019179133103183737,11,6,0.6470588235294118\nbug_message_keyword_unabl,44,[1],0.0009589566551591868,0.00019179133103183735,0.00019179133103183735,5,0,1.0\nbug_message_keyword_unclos,45,[1],0.0009589566551591868,0.0007671653241273494,0.0003835826620636747,4,1,0.8\nbug_message_keyword_unexpect,46,[1],0.0015343306482546988,0.0011507479861910242,0.0005753739930955121,6,2,0.75\nbug_message_keyword_unknown,47,[1],0.0007671653241273494,0.0005753739930955121,0.0003835826620636747,2,2,0.5\nbug_message_keyword_unsynchron,48,[1],0.0005753739930955121,0.0,0.0,2,1,0.6666666666666666\nbug_message_keyword_wrong,49,[1],0.009973149213655544,0.006904487917146145,0.004411200613732259,48,4,0.9230769230769231\nbugless_message_keyword_abil,50,[0],0.0019179133103183737,0.0017261219792865361,0.00019179133103183735,7,3,0.7\nbugless_message_keyword_ad,51,[0],0.046413502109704644,0.03241273494438052,0.016877637130801686,149,93,0.615702479338843\nbugless_message_keyword_add,52,[0],0.10529344073647871,0.060797851937092445,0.02972765630993479,413,136,0.7522768670309654\nbugless_message_keyword_addit,53,[0],0.005753739930955121,0.005370157268891446,0.0034522439585730723,16,14,0.5333333333333333\nbugless_message_keyword_allow,54,[0],0.0349060222477944,0.021480629075565784,0.01304181051016494,118,64,0.6483516483516484\nbugless_message_keyword_analysi,55,[0],0.002493287303413886,0.002109704641350211,0.0003835826620636747,10,3,0.7692307692307692\nbugless_message_keyword_avoid,56,[0],0.014767932489451477,0.010548523206751054,0.00728807057920982,42,35,0.5454545454545454\nbugless_message_keyword_baselin,57,[0],0.00019179133103183735,0.0,0.0,1,0,1.0\nbugless_message_keyword_beautification,58,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_benchmark,59,[0],0.006329113924050633,0.005370157268891446,0.0013425393172228615,25,8,0.7575757575757576\nbugless_message_keyword_better,60,[0],0.009973149213655544,0.009205983889528193,0.0055619485999232835,31,21,0.5961538461538461\nbugless_message_keyword_bump,61,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_chang|log,62,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_clean,63,[0],0.01227464518603759,0.008438818565400843,0.004794783275795934,42,22,0.65625\nbugless_message_keyword_comment,64,[0],0.004794783275795934,0.004602991944764097,0.002685078634445723,11,14,0.44\nbugless_message_keyword_complet,65,[0],0.0013425393172228615,0.0013425393172228615,0.0007671653241273494,4,3,0.5714285714285714\nbugless_message_keyword_configur|chang,66,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_consolid,67,[0],0.0015343306482546988,0.0005753739930955121,0.0003835826620636747,7,1,0.875\nbugless_message_keyword_convert,68,[0],0.004027617951668585,0.003260452627541235,0.002109704641350211,12,9,0.5714285714285714\nbugless_message_keyword_coverag,69,[0],0.0009589566551591868,0.0009589566551591868,0.00019179133103183735,4,1,0.8\nbugless_message_keyword_create,70,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_deprec,71,[0],0.017836593785960874,0.013617184503260453,0.0028768699654775605,79,14,0.8494623655913979\nbugless_message_keyword_develop,72,[0],0.0003835826620636747,0.0003835826620636747,0.00019179133103183735,1,1,0.5\nbugless_message_keyword_doc,73,[0],0.04794783275795934,0.038933640199462986,0.02090525508247027,132,118,0.528\nbugless_message_keyword_drop,74,[0],0.002685078634445723,0.0013425393172228615,0.00019179133103183735,9,5,0.6428571428571428\nbugless_message_keyword_enhanc,75,[0],0.002493287303413886,0.0019179133103183737,0.0005753739930955121,12,1,0.9230769230769231\nbugless_message_keyword_exampl,76,[0],0.003260452627541235,0.0028768699654775605,0.0013425393172228615,6,11,0.3529411764705882\nbugless_message_keyword_exclud,77,[0],0.002493287303413886,0.0019179133103183737,0.0005753739930955121,7,6,0.5384615384615384\nbugless_message_keyword_expand,78,[0],0.0007671653241273494,0.0005753739930955121,0.0003835826620636747,2,2,0.5\nbugless_message_keyword_extendgener,79,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_featur,80,[0],0.002109704641350211,0.0017261219792865361,0.0009589566551591868,6,5,0.5454545454545454\nbugless_message_keyword_forget,81,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_format,82,[0],0.0055619485999232835,0.004986574606827772,0.0030686612965093976,19,10,0.6551724137931034\nbugless_message_keyword_gitignor,83,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_idea,84,[0],0.0007671653241273494,0.0007671653241273494,0.0005753739930955121,1,3,0.25\nbugless_message_keyword_implement,85,[0],0.03317990026850786,0.02550824702723437,0.01457614115841964,111,62,0.6416184971098267\nbugless_message_keyword_improv,86,[0],0.03701572688914461,0.028001534330648253,0.012466436517069428,153,40,0.7927461139896372\nbugless_message_keyword_includ,87,[0],0.01093210586881473,0.008247027234369007,0.004411200613732259,32,25,0.5614035087719298\nbugless_message_keyword_info,88,[0],0.002493287303413886,0.002109704641350211,0.0009589566551591868,8,5,0.6153846153846154\nbugless_message_keyword_intorduc,89,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_limit,90,[0],0.006137322593018795,0.004794783275795934,0.003260452627541235,18,14,0.5625\nbugless_message_keyword_log,91,[0],0.014384349827387802,0.012658227848101266,0.009014192558496356,46,29,0.6133333333333333\nbugless_message_keyword_migrat,92,[0],0.0009589566551591868,0.0007671653241273494,0.00019179133103183735,4,1,0.8\nbugless_message_keyword_minim,93,[0],0.0013425393172228615,0.0009589566551591868,0.00019179133103183735,5,2,0.7142857142857143\nbugless_message_keyword_modif,94,[0],0.0034522439585730723,0.003260452627541235,0.003260452627541235,7,11,0.3888888888888889\nbugless_message_keyword_move,95,[0],0.02608362102032988,0.013425393172228616,0.006329113924050633,89,47,0.6544117647058824\nbugless_message_keyword_new,96,[0],0.035097813578826235,0.02896049098580744,0.016302263137706177,104,79,0.5683060109289617\nbugless_message_keyword_note,97,[0],0.002685078634445723,0.002685078634445723,0.0019179133103183737,2,12,0.14285714285714285\nbugless_message_keyword_opinion,98,[0],0.00019179133103183735,0.00019179133103183735,0.00019179133103183735,0,1,0.0\nbugless_message_keyword_optim,99,[0],0.01227464518603759,0.00805523590333717,0.005370157268891446,38,26,0.59375\nbugless_message_keyword_pass|test,100,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_perf|test,101,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_perfom|test,102,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_perform,103,[0],0.01016494054468738,0.009014192558496356,0.002685078634445723,36,17,0.6792452830188679\nbugless_message_keyword_plugin,104,[0],0.0013425393172228615,0.0011507479861910242,0.0003835826620636747,4,3,0.5714285714285714\nbugless_message_keyword_polish,105,[0],0.0003835826620636747,0.0003835826620636747,0.0,2,0,1.0\nbugless_message_keyword_possibl,106,[0],0.009589566551591868,0.00863060989643268,0.00652090525508247,18,32,0.36\nbugless_message_keyword_prepar,107,[0],0.0023014959723820483,0.002109704641350211,0.0011507479861910242,7,5,0.5833333333333334\nbugless_message_keyword_propos,108,[0],0.0034522439585730723,0.0034522439585730723,0.0034522439585730723,8,10,0.4444444444444444\nbugless_message_keyword_provid,109,[0],0.02339854238588416,0.020713463751438434,0.01726121979286536,59,63,0.48360655737704916\nbugless_message_keyword_publish,110,[0],0.0007671653241273494,0.00019179133103183735,0.00019179133103183735,2,2,0.5\nbugless_message_keyword_readm,111,[0],0.0005753739930955121,0.0005753739930955121,0.0,3,0,1.0\nbugless_message_keyword_reduc,112,[0],0.006137322593018795,0.004027617951668585,0.002493287303413886,24,8,0.75\nbugless_message_keyword_refactor,113,[0],0.00805523590333717,0.004986574606827772,0.0028768699654775605,30,12,0.7142857142857143\nbugless_message_keyword_refin,114,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_reformat,115,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_regress|test,116,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_reimplement,117,[0],0.00019179133103183735,0.00019179133103183735,0.00019179133103183735,1,0,1.0\nbugless_message_keyword_release,118,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_remov,119,[0],0.06214039125431531,0.03855005753739931,0.019562715765247412,211,113,0.6512345679012346\nbugless_message_keyword_renam,120,[0],0.00728807057920982,0.0034522439585730723,0.0015343306482546988,29,9,0.763157894736842\nbugless_message_keyword_reorgan,121,[0],0.0009589566551591868,0.0005753739930955121,0.0003835826620636747,3,2,0.6\nbugless_message_keyword_replac,122,[0],0.01304181051016494,0.00863060989643268,0.005370157268891446,39,29,0.5735294117647058\nbugless_message_keyword_restrict,123,[0],0.0019179133103183737,0.0017261219792865361,0.0009589566551591868,4,6,0.4\nbugless_message_keyword_restructur,124,[0],0.0005753739930955121,0.0003835826620636747,0.00019179133103183735,1,2,0.33333333333333337\nbugless_message_keyword_review,125,[0],0.0030686612965093976,0.002493287303413886,0.0019179133103183737,6,10,0.375\nbugless_message_keyword_rewrit,126,[0],0.002109704641350211,0.0011507479861910242,0.0007671653241273494,9,2,0.8181818181818181\nbugless_message_keyword_rid,127,[0],0.0007671653241273494,0.0003835826620636747,0.00019179133103183735,3,1,0.75\nbugless_message_keyword_set|up,128,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_simplif,129,[0],0.0005753739930955121,0.0003835826620636747,0.0,2,1,0.6666666666666666\nbugless_message_keyword_simplifi,130,[0],0.004027617951668585,0.00364403528960491,0.0019179133103183737,11,10,0.5238095238095238\nbugless_message_keyword_speedup,131,[0],0.002109704641350211,0.0007671653241273494,0.0,8,3,0.7272727272727273\nbugless_message_keyword_stage,132,[0],0.0003835826620636747,0.00019179133103183735,0.0,2,0,1.0\nbugless_message_keyword_stat,133,[0],0.002109704641350211,0.0007671653241273494,0.00019179133103183735,6,5,0.5454545454545454\nbugless_message_keyword_statist,134,[0],0.0005753739930955121,0.0005753739930955121,0.0003835826620636747,3,0,1.0\nbugless_message_keyword_support,135,[0],0.03624856156501726,0.027234369006520907,0.011507479861910242,134,55,0.708994708994709\nbugless_message_keyword_switch,136,[0],0.005753739930955121,0.00364403528960491,0.0019179133103183737,22,8,0.7333333333333334\nbugless_message_keyword_test,137,[0],0.06846950517836593,0.057729190640583045,0.03394706559263521,174,183,0.48739495798319327\nbugless_message_keyword_test|coverag,138,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_test|pass,139,[],0.0,0.0,0.0,0,0,0.0\nbugless_message_keyword_todo,140,[0],0.0009589566551591868,0.0009589566551591868,0.0003835826620636747,4,1,0.8\nbugless_message_keyword_tweak,141,[0],0.0013425393172228615,0.0011507479861910242,0.0007671653241273494,3,4,0.4285714285714286\nbugless_message_keyword_unit,142,[0],0.005945531261986959,0.005753739930955121,0.0034522439585730723,12,19,0.3870967741935484\nbugless_message_keyword_unnecessari,143,[0],0.004219409282700422,0.003260452627541235,0.0005753739930955121,21,1,0.9545454545454546\nbugless_message_keyword_updat,144,[0],0.01822017644802455,0.014192558496355964,0.007096279248177982,46,49,0.4842105263157895\nbugless_message_keyword_upgrad,145,[0],0.008822401227464518,0.004986574606827772,0.0023014959723820483,33,13,0.717391304347826\nbugless_message_keyword_version,146,[0],0.02608362102032988,0.02186421173762946,0.011891062523973917,55,81,0.40441176470588236\nbug_issue_body_keyword_bad,147,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_broken,148,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_bug,149,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_close,150,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_concurr,151,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_correct,152,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_corrupt,153,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_crash,154,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_deadlock,155,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_defect,156,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_disabl,157,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_endless,158,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_ensur,159,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_error,160,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_except,161,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_fail,162,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_fix,163,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_garbag,164,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_handl,165,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_incomplet,166,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_inconsist,167,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_incorrect,168,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_infinit,169,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_invalid,170,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_issue,171,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_leak,172,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_loop,173,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_minor,174,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_mistak,175,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_npe,176,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_not|work,177,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_not|return,178,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_of|bound,179,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_patch,180,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_prevent,181,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_problem,182,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_properli,183,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_race|condit,184,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_repair,185,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_resolv,186,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_threw,187,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_timeout,188,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_unabl,189,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_unclos,190,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_unexpect,191,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_unknown,192,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_unsynchron,193,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_body_keyword_wrong,194,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_label_keyword_bug,195,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_label_keyword_fixed,196,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_label_keyword_fix,197,[],0.0,0.0,0.0,0,0,0.0\nbug_issue_label_keyword_error,198,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_abil,199,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_ad,200,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_add,201,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_addit,202,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_allow,203,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_analysi,204,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_avoid,205,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_baselin,206,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_beautification,207,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_benchmark,208,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_better,209,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_bump,210,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_chang|log,211,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_clean,212,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_comment,213,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_complet,214,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_configur|chang,215,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_consolid,216,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_convert,217,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_coverag,218,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_create,219,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_deprec,220,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_develop,221,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_doc,222,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_drop,223,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_enhanc,224,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_exampl,225,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_exclud,226,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_expand,227,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_extendgener,228,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_featur,229,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_forget,230,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_format,231,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_gitignor,232,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_idea,233,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_implement,234,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_improv,235,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_includ,236,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_info,237,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_intorduc,238,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_limit,239,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_log,240,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_migrat,241,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_minim,242,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_modif,243,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_move,244,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_new,245,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_note,246,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_opinion,247,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_optim,248,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_pass|test,249,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_perf|test,250,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_perfom|test,251,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_perform,252,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_plugin,253,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_polish,254,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_possibl,255,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_prepar,256,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_propos,257,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_provid,258,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_publish,259,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_readm,260,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_reduc,261,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_refactor,262,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_refin,263,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_reformat,264,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_regress|test,265,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_reimplement,266,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_release,267,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_remov,268,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_renam,269,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_reorgan,270,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_replac,271,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_restrict,272,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_restructur,273,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_review,274,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_rewrit,275,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_rid,276,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_set|up,277,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_simplif,278,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_simplifi,279,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_speedup,280,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_stage,281,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_stat,282,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_statist,283,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_support,284,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_switch,285,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_test,286,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_test|coverag,287,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_test|pass,288,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_todo,289,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_tweak,290,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_unit,291,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_unnecessari,292,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_updat,293,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_upgrad,294,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_body_keyword_version,295,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_label_keyword_bug,296,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_label_keyword_fix,298,[],0.0,0.0,0.0,0,0,0.0\nbugless_issue_label_keyword_error,299,[],0.0,0.0,0.0,0,0,0.0\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../bohr/generated/message_issues/analysis_herzig.csv	(revision 5a4d5a121a75caa1ae9a9e29cae3b8de777a6567)
++++ ../bohr/generated/message_issues/analysis_herzig.csv	(date 1602866736582)
+@@ -9,7 +9,7 @@
+ bug_message_keyword_correct,7,[1],0.01726121979286536,0.014384349827387802,0.008822401227464518,69,21,0.7666666666666666
+ bug_message_keyword_corrupt,8,[1],0.005178365937859608,0.004219409282700422,0.002493287303413886,25,2,0.9259259259259259
+ bug_message_keyword_crash,9,[1],0.0009589566551591868,0.0007671653241273494,0.0005753739930955121,4,1,0.8
+-bug_message_keyword_deadlock,10,[1],0.0055619485999232835,0.004602991944764097,0.0034522439585730723,29,0,1.0
++bug_message_keyword_dead|lock,10,[1],0.0055619485999232835,0.004602991944764097,0.0034522439585730723,29,0,1.0
+ bug_message_keyword_defect,11,[1],0.00019179133103183735,0.00019179133103183735,0.0,1,0,1.0
+ bug_message_keyword_disabl,12,[1],0.0055619485999232835,0.004411200613732259,0.0038358266206367474,16,13,0.5517241379310345
+ bug_message_keyword_endless,13,[1],0.0009589566551591868,0.0009589566551591868,0.00019179133103183735,5,0,1.0
+@@ -130,7 +130,7 @@
+ bugless_message_keyword_set|up,128,[],0.0,0.0,0.0,0,0,0.0
+ bugless_message_keyword_simplif,129,[0],0.0005753739930955121,0.0003835826620636747,0.0,2,1,0.6666666666666666
+ bugless_message_keyword_simplifi,130,[0],0.004027617951668585,0.00364403528960491,0.0019179133103183737,11,10,0.5238095238095238
+-bugless_message_keyword_speedup,131,[0],0.002109704641350211,0.0007671653241273494,0.0,8,3,0.7272727272727273
++bugless_message_keyword_speed|up,131,[0],0.002109704641350211,0.0007671653241273494,0.0,8,3,0.7272727272727273
+ bugless_message_keyword_stage,132,[0],0.0003835826620636747,0.00019179133103183735,0.0,2,0,1.0
+ bugless_message_keyword_stat,133,[0],0.002109704641350211,0.0007671653241273494,0.00019179133103183735,6,5,0.5454545454545454
+ bugless_message_keyword_statist,134,[0],0.0005753739930955121,0.0005753739930955121,0.0003835826620636747,3,0,1.0
+@@ -154,7 +154,7 @@
+ bug_issue_body_keyword_correct,152,[],0.0,0.0,0.0,0,0,0.0
+ bug_issue_body_keyword_corrupt,153,[],0.0,0.0,0.0,0,0,0.0
+ bug_issue_body_keyword_crash,154,[],0.0,0.0,0.0,0,0,0.0
+-bug_issue_body_keyword_deadlock,155,[],0.0,0.0,0.0,0,0,0.0
++bug_issue_body_keyword_dead|lock,155,[],0.0,0.0,0.0,0,0,0.0
+ bug_issue_body_keyword_defect,156,[],0.0,0.0,0.0,0,0,0.0
+ bug_issue_body_keyword_disabl,157,[],0.0,0.0,0.0,0,0,0.0
+ bug_issue_body_keyword_endless,158,[],0.0,0.0,0.0,0,0,0.0
+@@ -279,7 +279,7 @@
+ bugless_issue_body_keyword_set|up,277,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_simplif,278,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_simplifi,279,[],0.0,0.0,0.0,0,0,0.0
+-bugless_issue_body_keyword_speedup,280,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_body_keyword_speed|up,280,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_stage,281,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_stat,282,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_statist,283,[],0.0,0.0,0.0,0,0,0.0
+@@ -295,7 +295,9 @@
+ bugless_issue_body_keyword_updat,293,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_upgrad,294,[],0.0,0.0,0.0,0,0,0.0
+ bugless_issue_body_keyword_version,295,[],0.0,0.0,0.0,0,0,0.0
+-bugless_issue_label_keyword_bug,296,[],0.0,0.0,0.0,0,0,0.0
+-bugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0,0,0,0.0
+-bugless_issue_label_keyword_fix,298,[],0.0,0.0,0.0,0,0,0.0
+-bugless_issue_label_keyword_error,299,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_label_keyword_enhancement,296,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_label_keyword_feature,297,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_label_keyword_request,298,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_label_keyword_refactor,299,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_label_keyword_renovate,300,[],0.0,0.0,0.0,0,0,0.0
++bugless_issue_label_keyword_new,301,[],0.0,0.0,0.0,0,0,0.0

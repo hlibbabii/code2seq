@@ -1,0 +1,20 @@
+Group,Correctly predicted,Wrong order or with additional words,Missing words
+setgetters_2_words,39107,6253,15192
+setgetters_3_words,29626,4039,27578
+setgetters_more_words,8178,4225,26606
+handlers,6897,1242,4552
+main,2027,115,112
+1words_0invented,15595,7434,5631
+1words_1invented,5996,2165,22988
+2words_0invented,20039,3087,13355
+2words_1invented,4854,620,23530
+2words_2invented,1343,124,14691
+3words_0invented,4091,1511,8968
+3words_1invented,1532,234,15166
+3words_2invented,424,25,11559
+3words_3invented,298,12,6392
+4+words_0invented,1118,562,6297
+4+words_1invented,270,62,10125
+4+words_2invented,65,2,9319
+4+words_3invented,91,1,7287
+4+words_4+invented,53,0,14338
